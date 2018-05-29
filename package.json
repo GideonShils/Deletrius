@@ -1,0 +1,36 @@
+{
+  "name": "twitter-delete",
+  "version": "1.0.0",
+  "description": "twitter mass deletion",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "nodemon server.js --exec babel-node --ignore client",
+    "start:client": "cd client && yarn start",
+    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GideonShils/Twitter-Delete.git"
+  },
+  "author": "Gideon Shils",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GideonShils/Twitter-Delete/issues"
+  },
+  "homepage": "https://github.com/GideonShils/Twitter-Delete#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.5.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.17.5"
+  }
+}
