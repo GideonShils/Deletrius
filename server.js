@@ -49,8 +49,8 @@ passport.use(new TwitterStrategy ({
 	callbackURL: "http://127.0.0.1:3001/auth/twitter/callback"
 	},
 	function(token, tokenSecret, profile, callback) {
-		console.log(profile);
 		User.findOne({ userId : profile.id }, (err, user) => {
+			console.log(user);
 			if (err) {
 				return callback(err);
 			}
@@ -58,17 +58,19 @@ passport.use(new TwitterStrategy ({
 			// If user exists, update and return them
 			if (user) {
 				console.log('exists');
-				User.update({ userId: profile.id }, 
-					{
-						userToken: token,
-						userTokenSecret: tokenSecret,
-						username: profile.username,
-						displayname: profile.displayname,
-						photo: profile.photos[0].value
-					}, (err) => {
+				user.userToken = token;
+				user.userTokenSecret = tokenSecret;
+				user.username = profile.username;
+				user.displayname = profile.displayname;
+				user.photo = profile.photos[0].value;
+
+				user.save((err) => {
+					if (err) {
 						throw err;
-					})
-				return callback(null, user);
+					} else {
+						return callback(null, user);
+					}
+				});
 			} 
 			// If user doesn't exist, add to DB and return them
 			else {
