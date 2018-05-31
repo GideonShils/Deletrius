@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import session from 'express-session';
+import twitter from 'twit';
 var TwitterStrategy = require('passport-twitter').Strategy;
 require('dotenv').config();
 
@@ -25,7 +26,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', router);
 
-
 // API
 router.get('/', (req, res) => {
 	res.send({message: 'Hello World'});
@@ -42,6 +42,15 @@ router.get('/auth/twitter/callback',
 	})
 );
 
+router.get('/success', (req, res) => {
+	let t = new twitter(req.user.twit);
+	
+	t.post('statuses/update', { status: 'test2' }, (err, data, response) => {
+		console.log(data);
+	});
+	res.send(req.user);
+});
+
 // Twitter authentication
 passport.use(new TwitterStrategy ({
 	consumerKey: process.env.CONSUMER_KEY,
@@ -50,7 +59,6 @@ passport.use(new TwitterStrategy ({
 	},
 	function(token, tokenSecret, profile, callback) {
 		User.findOne({ userId : profile.id }, (err, user) => {
-			console.log(user);
 			if (err) {
 				return callback(err);
 			}
@@ -63,6 +71,12 @@ passport.use(new TwitterStrategy ({
 				user.username = profile.username;
 				user.displayname = profile.displayname;
 				user.photo = profile.photos[0].value;
+				user.twit = {
+					consumer_key: process.env.CONSUMER_KEY,
+					consumer_secret: process.env.CONSUMER_SECRET,
+					access_token: token,
+					access_token_secret: tokenSecret
+				};
 
 				user.save((err) => {
 					if (err) {
@@ -82,6 +96,12 @@ passport.use(new TwitterStrategy ({
 				newUser.username = profile.username;
 				newUser.displayname = profile.displayname;
 				newUser.photo = profile.photos[0].value;
+				newUser.twit = {
+					consumer_key: process.env.CONSUMER_KEY,
+					consumer_secret: process.env.CONSUMER_SECRET,
+					access_token: token,
+					access_token_secret: tokenSecret
+				};
 
 				newUser.save((err) => {
 					if (err) {
@@ -118,13 +138,17 @@ mongoose.connect(process.env.DB_URI, {
 
 const Schema = mongoose.Schema;
 
+const tweetSchema = new Schema({});
+
 const userSchema = new Schema({
 	userId: Number,
 	userToken: String,
 	userTokenSecret: String,
 	username: String,
 	displayName: String,
-	photo: String
+	photo: String,
+	twit: Object,
+	tweets: [tweetSchema]
 });
 
 const User = mongoose.model('users', userSchema)

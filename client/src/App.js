@@ -13,6 +13,9 @@ class App extends Component {
         <a href="http://127.0.0.1:3001/auth/twitter" className="App-intro">
           Login with twitter
         </a>
+        <a href="http://127.0.0.1:3001/fetch/" className="App-intro">
+          Fetch tweets
+        </a>
       </div>
     );
   }
