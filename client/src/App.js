@@ -10,7 +10,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Twitter Delete</h1>
         </header>
-        <a href="/api/auth/twitter" className="App-intro">
+        <a href="http://127.0.0.1:3001/auth/twitter" className="App-intro">
           Login with twitter
         </a>
       </div>
