@@ -43,12 +43,75 @@ router.get('/auth/twitter/callback',
 );
 
 router.get('/success', (req, res) => {
-	let t = new twitter(req.user.twit);
-	
-	t.post('statuses/update', { status: 'test2' }, (err, data, response) => {
-		console.log(data);
-	});
 	res.send(req.user);
+});
+
+router.get('/fetch', (req, res) => {
+	let t = new twitter(req.user.twit);
+	let allTweets = [];
+	getTweets();
+
+	function getTweets() {
+		// Set arguments
+		let args = {
+			user_id: req.user.userId,
+			count: 200
+		}
+		// If not first call, include maxID = id of last retrieved tweet
+		if (allTweets.length > 0) {
+			args.max_id = allTweets[allTweets.length-1].tweetId;
+		}
+		
+		// Make API call to get 200 tweets after maxID
+		t.get('statuses/user_timeline', args, 
+			(err, data, response) => {
+				if (err) {
+					return done(err);
+				}
+				// If not first call, remove first (since includerd in last set)
+				if (allTweets.length > 0) {
+					console.log('removing ' + data.shift().id);
+				}
+				// Create a new document for each tweet and push it to stack
+				data.forEach((element) => {
+					let newTweet = new Tweet({
+						tweetId : element.id,
+						tweetData : element
+					});
+					allTweets.push(newTweet);
+				})
+				console.log('last added: ' + allTweets[allTweets.length-1].tweetId);
+
+				// If no data, we're done
+				if (data.length == 0) {
+					return done(null, allTweets)
+				}
+
+				// Oterwise, call again
+				return getTweets();
+
+			}
+		)
+	}
+	function done(err, data) {
+		if (err) {
+			console.log('error fetching tweets');
+		} else {
+			console.log('saving ' + data.length + ' tweets' );
+			let userId = req.user.userId;
+			User.findOne({ userId : userId }, (err, user) => {
+				user.tweets = data;
+				user.save((err) => {
+					if (err) {
+						console.log('error saving tweets.');
+					} else {
+						console.log('success. saved all tweets');
+					}
+				});
+			});
+		}
+		res.end();
+	}
 });
 
 // Twitter authentication
@@ -133,12 +196,15 @@ mongoose.connect(process.env.DB_URI, {
 	}
 })
 .then(() => console.log('Database connection successful'))
-.catch((err) => console.error('Database connection error'));
+.catch((err) => console.error(err + 'Database connection error'));
 
 
 const Schema = mongoose.Schema;
 
-const tweetSchema = new Schema({});
+const tweetSchema = new Schema({
+	tweetId: Number,
+	tweetData: Object
+});
 
 const userSchema = new Schema({
 	userId: Number,
@@ -151,7 +217,8 @@ const userSchema = new Schema({
 	tweets: [tweetSchema]
 });
 
-const User = mongoose.model('users', userSchema)
+const Tweet = mongoose.model('tweets', tweetSchema);
+const User = mongoose.model('users', userSchema);
 
 // Start server listening
 app.listen(app.get('port'), () => {
