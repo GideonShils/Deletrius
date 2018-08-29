@@ -10,8 +10,10 @@ import path from 'path';
 var TwitterStrategy = require('passport-twitter').Strategy;
 require('dotenv').config();
 
+/********************************
+ *  App config / middleware
+ ********************************/
 
-// App config
 const app = express();
 const router = express.Router();
 
@@ -20,15 +22,17 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(session({
-    secret: "SECRET",
-    resave: true,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
     saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', router);
 
-// API
+/********************************
+ *  API
+ ********************************/
 router.get('/', (req, res) => {
 	res.send({message: 'Hello World'});
 })
@@ -43,6 +47,10 @@ router.get('/auth/twitter/callback',
 		failureRedirect : '/failure'
 	})
 );
+
+router.get('/logout', (req, res) => {
+	req.session.destroy();
+})
 
 router.get('/success', (req, res) => {
 	res.send(req.user);
@@ -86,7 +94,7 @@ router.get('/fetch', (req, res) => {
 
 				// If no data, we're done
 				if (data.length == 0) {
-					return done(null, allTweets)
+					return done(null, allTweets);
 				}
 
 				// Oterwise, call again
@@ -116,67 +124,51 @@ router.get('/fetch', (req, res) => {
 	}
 });
 
-// Twitter authentication
+/********************************
+ *  Authentication
+ ********************************/
 passport.use(new TwitterStrategy ({
 	consumerKey: process.env.CONSUMER_KEY,
 	consumerSecret: process.env.CONSUMER_SECRET,
 	callbackURL: "http://127.0.0.1:3001/auth/twitter/callback"
 	},
 	function(token, tokenSecret, profile, callback) {
-		User.findOne({ userId : profile.id }, (err, user) => {
-			if (err) {
-				return callback(err);
-			}
-	
-			// If user exists, update and return them
-			if (user) {
-				console.log('exists');
-				user.userToken = token;
-				user.userTokenSecret = tokenSecret;
-				user.username = profile.username;
-				user.displayname = profile.displayname;
-				user.photo = profile.photos[0].value;
-				user.twit = {
+		// Update or create user
+		User.findOneAndUpdate(
+			{userId : profile.id},
+			{
+				userId: profile.id,
+				userToken: token,
+				userTokenSecret: tokenSecret,
+				username: profile.username,
+				displayname: profile.displayName,
+				photo: profile.photos[0].value,
+				twit: {
 					consumer_key: process.env.CONSUMER_KEY,
 					consumer_secret: process.env.CONSUMER_SECRET,
 					access_token: token,
 					access_token_secret: tokenSecret
-				};
+				}
+			
+			},
+			{
+				upsert: true,	// create user if doesn't exist
+				new: true		// return the modified document
+			},
+			(err, user) => {
+				if (err) {
+					return callback(err);
+				}
 
 				user.save((err) => {
 					if (err) {
-						throw err;
+						return callback(err);
 					} else {
 						return callback(null, user);
 					}
-				});
-			} 
-			// If user doesn't exist, add to DB and return them
-			else {
-				console.log('new');
-				let newUser = new User();
-				newUser.userId = profile.id;
-				newUser.userToken = token;
-				newUser.userTokenSecret = tokenSecret;
-				newUser.username = profile.username;
-				newUser.displayname = profile.displayname;
-				newUser.photo = profile.photos[0].value;
-				newUser.twit = {
-					consumer_key: process.env.CONSUMER_KEY,
-					consumer_secret: process.env.CONSUMER_SECRET,
-					access_token: token,
-					access_token_secret: tokenSecret
-				};
-
-				newUser.save((err) => {
-					if (err) {
-						throw err;
-					} else {
-						return callback(null, newUser)
-					}
 				})
 			}
-		})
+		)
 	}
 ));
 
@@ -190,7 +182,9 @@ passport.deserializeUser((id, done) => {
 	})
 });
 
-// Database
+/********************************
+ *  Database setup
+ ********************************/
 mongoose.connect(process.env.DB_URI, {
 	auth: {
 		user: process.env.DB_USER,
@@ -201,13 +195,16 @@ mongoose.connect(process.env.DB_URI, {
 .catch((err) => console.error(err + 'Database connection error'));
 
 
+// Define schemas
 const Schema = mongoose.Schema;
 
+// Tweet schema
 const tweetSchema = new Schema({
 	tweetId: Number,
 	tweetData: Object
 });
 
+// User schema
 const userSchema = new Schema({
 	userId: Number,
 	userToken: String,
@@ -219,6 +216,7 @@ const userSchema = new Schema({
 	tweets: [tweetSchema]
 });
 
+// Define models
 const Tweet = mongoose.model('tweets', tweetSchema);
 const User = mongoose.model('users', userSchema);
 
