@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import session from 'express-session';
-import twitter from 'twit';
+import twit from 'twit';
 import fs from 'fs';
 import path from 'path';
 var TwitterStrategy = require('passport-twitter').Strategy;
@@ -57,52 +57,46 @@ router.get('/success', (req, res) => {
 });
 
 router.get('/fetch', (req, res) => {
-	let t = new twitter(req.user.twit);
+	let t = new twit(req.user.twit);
 	let allTweets = [];
 	getTweets();
 
-	function getTweets() {
+	function getTweets(lastId) {
 		// Set arguments
 		let args = {
 			user_id: req.user.userId,
 			count: 200
 		}
 		// If not first call, include maxID = id of last retrieved tweet
-		if (allTweets.length > 0) {
-			args.max_id = allTweets[allTweets.length-1].tweetId;
+		if (lastId) {
+			args.max_id = lastId;
 		}
 		
 		// Make API call to get 200 tweets after maxID
-		t.get('statuses/user_timeline', args, 
-			(err, data, response) => {
-				if (err) {
-					return done(err);
-				}
-				// If not first call, remove first (since includerd in last set)
-				if (allTweets.length > 0) {
-					console.log('removing ' + data.shift().id);
-				}
-				// Create a new document for each tweet and push it to stack
-				data.forEach((element) => {
-					let newTweet = new Tweet({
-						tweetId : element.id,
-						tweetData : element
-					});
-					allTweets.push(newTweet);
-				})
-				console.log('last added: ' + allTweets[allTweets.length-1].tweetId);
+		t.get('statuses/user_timeline', args, compile);
 
-				// If no data, we're done
-				if (data.length == 0) {
-					return done(null, allTweets);
-				}
-
-				// Oterwise, call again
-				return getTweets();
-
+		function compile(err, data) {
+			if (err) {
+				return done(err);
 			}
-		)
+			// If this isn't the first call, remove first tweet (since includerd in last set)
+			if (allTweets.length) {
+				data.shift();
+			}
+			
+			allTweets = allTweets.concat(data);
+
+			// If no data, we're done
+			if (data.length == 0) {
+				return done(null, allTweets);
+			}
+			
+			// Otherwise, call again
+			return getTweets(parseInt(allTweets[allTweets.length - 1].id_str));
+
+		}
 	}
+
 	function done(err, data) {
 		if (err) {
 			console.log('error fetching tweets');
@@ -133,42 +127,36 @@ passport.use(new TwitterStrategy ({
 	callbackURL: "http://127.0.0.1:3001/auth/twitter/callback"
 	},
 	function(token, tokenSecret, profile, callback) {
-		// Update or create user
-		User.findOneAndUpdate(
-			{userId : profile.id},
-			{
-				userId: profile.id,
-				userToken: token,
-				userTokenSecret: tokenSecret,
-				username: profile.username,
-				displayname: profile.displayName,
-				photo: profile.photos[0].value,
-				twit: {
-					consumer_key: process.env.CONSUMER_KEY,
-					consumer_secret: process.env.CONSUMER_SECRET,
-					access_token: token,
-					access_token_secret: tokenSecret
-				}
-			
-			},
-			{
-				upsert: true,	// create user if doesn't exist
-				new: true		// return the modified document
-			},
-			(err, user) => {
-				if (err) {
-					return callback(err);
-				}
+		var query = { userId: profile.id };
 
-				user.save((err) => {
-					if (err) {
-						return callback(err);
-					} else {
-						return callback(null, user);
-					}
-				})
+		var updates = {
+			userId: profile.id,
+			userToken: token,
+			userTokenSecret: tokenSecret,
+			username: profile.username,
+			displayname: profile.displayName,
+			photo: profile.photos[0].value,
+			twit: {
+				consumer_key: process.env.CONSUMER_KEY,
+				consumer_secret: process.env.CONSUMER_SECRET,
+				access_token: token,
+				access_token_secret: tokenSecret
 			}
-		)
+		};
+
+		var options = {
+			upsert: true,
+			new: true
+		};
+
+		// Update or create user
+		User.findOneAndUpdate(query, updates, options, (err, user) => {
+			if (err) {
+				return callback(err);
+			} else {
+				return callback(null, user);
+			}
+		})
 	}
 ));
 
@@ -189,7 +177,8 @@ mongoose.connect(process.env.DB_URI, {
 	auth: {
 		user: process.env.DB_USER,
 		password: process.env.DB_PASS
-	}
+	},
+	useNewUrlParser: true
 })
 .then(() => console.log('Database connection successful'))
 .catch((err) => console.error(err + 'Database connection error'));
@@ -197,12 +186,6 @@ mongoose.connect(process.env.DB_URI, {
 
 // Define schemas
 const Schema = mongoose.Schema;
-
-// Tweet schema
-const tweetSchema = new Schema({
-	tweetId: Number,
-	tweetData: Object
-});
 
 // User schema
 const userSchema = new Schema({
@@ -213,11 +196,10 @@ const userSchema = new Schema({
 	displayName: String,
 	photo: String,
 	twit: Object,
-	tweets: [tweetSchema]
+	tweets: Object
 });
 
 // Define models
-const Tweet = mongoose.model('tweets', tweetSchema);
 const User = mongoose.model('users', userSchema);
 
 // Start server listening

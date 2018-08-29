@@ -2,20 +2,36 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      isAuthenticated: false,
+      user: null,
+      token: ''
+    };
+  };
+
+  logout = () => { 
+    this.setState({
+      isAuthenticated: false,
+      user: null,
+      token: ''
+    })
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Twitter Delete</h1>
-          <p>Need to bulk delete your tweets? You've come to the right place.</p>
-        </header>
         <a href="http://127.0.0.1:3001/auth/twitter" className="App-intro">
-          Login with twitter
+          Login
         </a>
+        
         <br/>
         <a href="http://127.0.0.1:3001/fetch/" className="App-intro">
           Fetch tweets
         </a>
+        { /*
         <br/>
         <a href="http://127.0.0.1:3001/import/" className='App-intro'>
           Import from archive
@@ -27,6 +43,7 @@ class App extends Component {
           <br/>
           <input type="submit" value="upload!" />
         </form>
+        */ }
       </div>
     );
   }
