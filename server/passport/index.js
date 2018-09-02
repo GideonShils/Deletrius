@@ -6,10 +6,12 @@ import TwitterStrategy from './twitterStrategy';
 passport.use(TwitterStrategy);
 
 passport.serializeUser((user, done) => {
+	//console.log('serialize');
 	done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+	//console.log('deserialize');
 	User.findById(id, (err, user) => {
 		done(err, user);
 	})

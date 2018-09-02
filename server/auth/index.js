@@ -15,31 +15,24 @@ router.get('/twitter/callback',
 );
 
 router.get('/success', (req, res) => {
-    console.log('login success')
-    console.log(req.user)
-    res.redirect('http://127.0.0.1:3000/?s')
+    res.redirect('http://127.0.0.1:3000/')
 });
 
 router.get('/failure', (req, res) => {
-    console.log('login failure')
-    console.log(req.user)
-	res.redirect('http://127.0.0.1:3000/?f');
+	res.redirect('http://127.0.0.1:3000/');
 });
 
 // Get user info
 router.get('/user', (req, res) => {
-    console.log('user info')
-    console.log(req.user)
     if (req.user) {
-        return res.json({ user: req.user })
+        return res.json({ username: req.user.username })
     } else {
-        return res.json( { user: null })
+        return res.json( { username: null })
     }
 });
 
 // Logout
-router.post('/logout', (req, res) => {
-    console.log('logging out')
+router.get('/logout', (req, res) => {
     if (req.user) {
         req.session.destroy()
         return res.json( { msg: 'logging out'} );
