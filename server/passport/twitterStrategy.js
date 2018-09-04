@@ -1,9 +1,10 @@
 import User from '../db/models/user';
 import {Strategy as TwitterStrategy} from 'passport-twitter';
-// const TwitterStrategy = require('passport-twitter').Strategy;
 require('dotenv').config();
 
-const strategy = new TwitterStrategy ({
+// Setup twitter authentication strategy
+const strategy = new TwitterStrategy (
+	{
 	consumerKey: process.env.CONSUMER_KEY,
 	consumerSecret: process.env.CONSUMER_SECRET,
 	callbackURL: "http://127.0.0.1:3001/auth/twitter/callback"

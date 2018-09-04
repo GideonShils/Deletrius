@@ -2,30 +2,34 @@ require('dotenv').config();
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
-import passport from './passport';
+import cors from 'cors';
+import helmet from 'helmet';
 import session from 'express-session';
+import passport from './passport';
+
 import authRouter from './auth';
 import apiRouter from './api';
-import cors from 'cors';
 import db from './db';
 
 const app = express();
 
 app.set('port', process.env.PORT || 3001);
 
+// Enable cross origin from react port
 app.use(cors({
     origin:['http://127.0.0.1:3000'],
     methods:['GET','POST', 'PUT', 'DELETE'],
     credentials: true // enable set cookie
 }));
 
-
+app.use(helmet()); // Security
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
 app.use(session({
     secret: 'keyboard cat',
+    name: 'sessionId',
     resave: false,
     saveUninitialized: true
 }));
