@@ -25,7 +25,10 @@ router.get('/failure', (req, res) => {
 // Get user info
 router.get('/user', (req, res) => {
     if (req.user) {
-        return res.json({ username: req.user.username })
+        return res.json({ 
+            username: req.user.username,
+            photo: req.user.photo
+        })
     } else {
         return res.json( { username: null })
     }

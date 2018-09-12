@@ -1,28 +1,133 @@
-.App {
-  text-align: center;
+/* CSS RESETS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+/* NORMAL CSS */
+
+html {
+  background-image: url('./assets/bg.jpg');
+  background-position: center center;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size:  cover;
+
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.loggedInContainer {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 50px;
+  background: #A6CCD7;
 }
 
-.App-title {
+.loggedOutContainer {
+  width: 90%;
+  margin: 0 auto;
+  background: #A6CCD7;
+}
+
+.sidebar {
+  width: 30%;
+  float: left;
+  background: rgba(255, 255, 255, .7);
+  height: 500px;
+
+}
+
+.userInfo {
+  margin: 20px 0 0 20px;
+}
+
+.userInfo h2 {
+  margin-top: 10px;
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.userInfo img {
+  border-radius: 100%;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.profile {
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding-bottom: 20px;
+}
+
+.profile .button {
+  margin-left: 20px;
+  margin-top: 10px;
+  background: #EC3343;
+  border-radius: 50px;
+  width: 60px;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+}
+
+.right {
+  width: 70%;
+  float: left;
+}
+
+.topbar {
+  background: rgba(255, 255, 255, .7);
+  padding: 20px;
+}
+
+.topbar div {
+  display: inline-block;
+  background: #EC3343;
+  border-radius: 50px;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 10px;
+  margin-right: 20px;
+  color: #fff;
+}
+
+.content {
+  background: rgba(170, 208, 221, .7);
+  height: 428px;
 }
