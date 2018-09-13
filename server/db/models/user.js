@@ -14,7 +14,7 @@ const userSchema = new Schema({
 	tweets: Object
 });
 
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model('Users', userSchema);
 
 module.exports = User;
 
