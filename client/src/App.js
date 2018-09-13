@@ -12,18 +12,49 @@ class App extends Component {
     super(props);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
 
-    this.state = {
-      isAuthenticated : false,
-      user : null
+    let username = localStorage.getItem('username');
+    let photo = localStorage.getItem('photo')
+
+    if (username) {
+      let user = {
+        username: username,
+        photo: photo
+      }
+      this.state = {
+        isAuthenticated: true,
+        user: user
+      }
+    } else {
+      this.state = {
+        isAuthenticated: false,
+        user: null
+      }
+
+      this.checkAuth();
     }
   }
 
-  componentDidMount() {
-    console.log('mounted! checking...');
-    this.checkAuth();
+  checkAuth() {
+    axios.get('http://127.0.0.1:3001/auth/user')
+    .then((res) => {
+      let user = res.data;
+
+      if (user) {
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('photo', user.photo);
+        this.setState({
+          isAuthenticated: true,
+          user: user
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   handleLogoutClick() {
+    localStorage.clear();
     axios.get('http://127.0.0.1:3001/auth/logout')
     .then((res) => {
       this.setState({
@@ -35,34 +66,12 @@ class App extends Component {
       console.log(err);
     })
   }
-
-  checkAuth() {
-    axios.get('http://127.0.0.1:3001/auth/user')
-    .then((res) => {
-      let user = res.data;
-  
-      if (user) {
-        this.setState({
-          isAuthenticated : true,
-          user: user
-        })
-      } else {
-        this.setState({
-          isAuthenticated : false,
-          user : null
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
   
   render() {
     return (
      this.state.isAuthenticated ? (
        <div>
-        {console.log('authenticated')}
+        {console.log("Rendering authenticated")}
         <LoggedInContainer 
           user={this.state.user}
           handleLogoutClick={this.handleLogoutClick} 
@@ -70,7 +79,7 @@ class App extends Component {
        </div>
       ) : (
         <div>
-        {console.log('not authenticated')}
+        {console.log("Rendering not authenticated")}
         <LoggedOutContainer />
        </div>
       )

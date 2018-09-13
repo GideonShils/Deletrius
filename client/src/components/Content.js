@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TopBar from './Topbar';
+import Tweets from './Tweets';
 import axios from 'axios';
 
 class Content extends Component {
@@ -9,14 +10,24 @@ class Content extends Component {
 
     this.handleFetchClick = this.handleFetchClick.bind(this);
 
-    this.state = {
-      fetched : false
+    let fetched = localStorage.getItem('fetched');
+
+    if (fetched) {
+      this.state = {
+        fetched: true
+      }
+    } else {
+      this.state = {
+        fetched: false
+      }
     }
   }
 
   handleFetchClick() {
     axios.get('http://127.0.0.1:3001/api/fetch')
     .then((res) => {
+      console.log('setting state')
+      localStorage.setItem('fetched', true);
       this.setState({
         fetched : true
       })
@@ -30,16 +41,16 @@ class Content extends Component {
     return (
       <div className="right">
         <TopBar />
-        <div className="content">
+        <div className="mainContent">
           {this.state.fetched ? (
             <div className="fetchedContent">
-              <FetchButton onClick={this.handleFetchClick} />
-              <h1>tweets</h1>
+              <FetchButton onClick={this.handleFetchClick} text="Fetch tweets again"/>
+              <Tweets />
             </div>
           ) : (
             <div className="emptyContent">
               <h3>Click fetch tweets to import your latest 3200 tweets</h3>
-              <FetchButton onClick={this.handleFetchClick} />
+              <FetchButton onClick={this.handleFetchClick} text="Fetch tweets"/>
             </div>
           )}
         </div>
@@ -52,7 +63,7 @@ function FetchButton(props) {
   return (
     <div>
         <button onClick={props.onClick}>
-          Fetch tweets
+          {props.text}
         </button>
       </div>
   )

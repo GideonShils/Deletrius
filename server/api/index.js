@@ -66,4 +66,22 @@ router.get('/fetch', (req, res) => {
     }
 });
 
+// Takes 2 params: page number (page), number per page(limit)
+router.get('/user/:id', (req, res) => {
+    const limit = parseInt(req.query.limit);
+    const page = parseInt(req.query.page);
+
+    const skip = (page - 1) * limit;
+    
+    User.find({userId : req.params.id}, {}, { limit: limit, skip: skip}, (err, docs) => {
+        if (err) {
+            console.log(err);
+            res.json(null);
+        } else {
+            console.log(docs);
+            res.json(docs);
+        }
+    })
+})
+
 module.exports = router;

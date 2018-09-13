@@ -30,7 +30,7 @@ router.get('/user', (req, res) => {
             photo: req.user.photo
         })
     } else {
-        return res.json( { username: null })
+        return res.json(null)
     }
 });
 

@@ -3,6 +3,7 @@ import SideBar from './Sidebar';
 import Content from './Content';
 
 class LoggedInContainer extends Component {
+
   render() {
     return (
       <div className="loggedInContainer">

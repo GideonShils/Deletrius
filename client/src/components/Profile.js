@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Profile extends Component {
   
   render() {
-    console.log(this.props.user)
     return (
       <div className="profile">
         <div className="userInfo">

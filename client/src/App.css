@@ -72,7 +72,7 @@ html {
   width: 30%;
   float: left;
   background: rgba(255, 255, 255, .7);
-  height: 500px;
+  height: 834px;
 
 }
 
@@ -97,6 +97,7 @@ html {
 .profile .button {
   margin-left: 20px;
   margin-top: 10px;
+  border: 1px solid #EC3343;
   background: #EC3343;
   border-radius: 50px;
   width: 60px;
@@ -104,6 +105,11 @@ html {
   text-align: center;
   padding: 10px;
   color: #fff;
+}
+
+.profile .button:hover {
+  border: 1px solid white;
+  cursor: pointer;
 }
 
 .right {
@@ -119,6 +125,7 @@ html {
 .topbar div {
   display: inline-block;
   background: #EC3343;
+  border: 1px solid #EC3343;
   border-radius: 50px;
   font-size: 0.8em;
   text-align: center;
@@ -127,7 +134,11 @@ html {
   color: #fff;
 }
 
-.content {
+.topbar div:hover {
+  cursor: pointer;
+  border: 1px solid #fff;
+}
+
+.mainContent {
   background: rgba(170, 208, 221, .7);
-  height: 428px;
 }
