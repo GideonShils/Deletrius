@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DropdownArrow from '@material-ui/icons/ArrowDropDown';
+import Grid from '@material-ui/core/Grid';
 
 class Profile extends Component {
   constructor(props) {
@@ -43,30 +44,33 @@ class Profile extends Component {
 
   render() {
     return (
-      <div>
-        <Avatar 
-          alt={this.props.user.username}
-          src={this.props.user.photo}
-        />
+      <Grid container>
+        <Grid item md={3}>
+          <Avatar 
+            alt={this.props.user.username}
+            src={this.props.user.photo}
+          />
+        </Grid>
+        <Grid item md={9}>
+          <Button
+            onClick={this.handleMenuOpen}
+            aria-owns={this.anchorEl ? 'menu' : null}
+            aria-haspopup="true"
+          >
+            {this.props.user.username}
+            <DropdownArrow />
+          </Button>
 
-        <Button
-          onClick={this.handleMenuOpen}
-          aria-owns={this.anchorEl ? 'menu' : null}
-          aria-haspopup="true"
-        >
-          {this.props.user.username}
-          <DropdownArrow />
-        </Button>
-
-        <Menu
-          anchorEl={this.anchorEl}
-          id="menu"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
-          <MenuItem dense="true" onClick={this.props.handleLogoutClick}>Logout</MenuItem>
-        </Menu>
-      </div>
+          <Menu
+            anchorEl={this.anchorEl}
+            id="menu"
+            open={this.state.open}
+            onClose={this.handleClose}
+          >
+            <MenuItem onClick={this.props.handleLogoutClick}>Logout</MenuItem>
+          </Menu>
+        </Grid>
+      </Grid>
     );
   }
 }
