@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+//import Grid from '@material-ui/core/Grid';
 
 class LoggedOutContainer extends Component {
   
   render() {
     return (
-      <div className="loggedOutContainer">
+      <div>
         <Header />
         <Button
           color="primary" 
@@ -23,6 +24,7 @@ function Header(props) {
   return (
     <div className ="header">
       <h1>Twitter Delete</h1>
+      <h2>Quickly find and delete old tweets in bulk</h2>
     </div>
   )
 }

@@ -10,6 +10,8 @@ const tweetSchema = new Schema({
 	date: Date
 });
 
+tweetSchema.index({'data.text': 'text'})
+
 const Tweet = mongoose.model('Tweets', tweetSchema);
 
 module.exports = Tweet;

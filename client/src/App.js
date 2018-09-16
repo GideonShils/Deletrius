@@ -15,11 +15,13 @@ class App extends Component {
 
     let username = localStorage.getItem('username');
     let photo = localStorage.getItem('photo')
+    let userId = localStorage.getItem('userId');
 
     if (username) {
       let user = {
         username: username,
-        photo: photo
+        photo: photo,
+        userId: userId
       }
       this.state = {
         isAuthenticated: true,
@@ -45,7 +47,8 @@ class App extends Component {
         localStorage.setItem('photo', user.photo);
         this.setState({
           isAuthenticated: true,
-          user: user
+          user: user,
+          userId: user.userId
         })
       }
     })

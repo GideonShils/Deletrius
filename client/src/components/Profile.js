@@ -75,12 +75,4 @@ class Profile extends Component {
   }
 }
 
-function LogoutButton(props) {
-    return (
-        <div className="button" onClick={props.onClick}>
-          Sign out
-        </div>
-    )
-}
-
 export default Profile;

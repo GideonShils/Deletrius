@@ -27,7 +27,8 @@ router.get('/user', (req, res) => {
     if (req.user) {
         return res.json({ 
             username: req.user.username,
-            photo: req.user.photo
+            photo: req.user.photo,
+            userId: req.user.userId
         })
     } else {
         return res.json(null)

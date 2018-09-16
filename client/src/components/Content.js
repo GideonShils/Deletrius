@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopBar from './Topbar';
 import Tweets from './Tweets';
-import axios from 'axios';
+//import axios from 'axios';
 import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -11,13 +11,18 @@ class Content extends Component {
     super(props);
     
     this.state = {
-      selectedTweets: null,
       page: 0,
-      count: 150,
+      count: 0,
       rowsPerPage: 25,
-      selected: []
-    }
+      loading: false,
+      tweetList: [],
 
+      /* should be props */
+      order: 'newFirst',
+      startDate: new Date('1995-12-03'),
+      endDate: new Date(),
+      search: ''
+    }
 
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleRowNumChange = this.handleRowNumChange.bind(this);
@@ -34,7 +39,6 @@ class Content extends Component {
       rowsPerPage: event.target.value
     })
   }
-
   
   render() {
     return (
@@ -50,16 +54,25 @@ class Content extends Component {
                 </div>
               ) : (
                 <div>
-                  <Tweets />
-                  <TablePagination 
-                    count={this.state.count}
-                    page={this.state.page} 
-                    rowsPerPage={this.state.rowsPerPage}
-                    component="div"
-                    onChangePage={this.handlePageChange}
-                    rowsPerPageOptions={[25, 50, 100]}
-                    onChangeRowsPerPage={this.handleRowNumChange}
-                  />
+                  {this.state.loading ? (
+                    <div>
+                      <h3>Loading tweets. Please wait...</h3>
+                      <CircularProgress color="primary"/>
+                    </div>
+                  ) : (
+                    <div>
+                      <Tweets tweetList={this.props.tweetList}/>
+                      <TablePagination 
+                        count={this.props.count}
+                        page={this.state.page} 
+                        rowsPerPage={this.state.rowsPerPage}
+                        component="div"
+                        onChangePage={this.handlePageChange}
+                        rowsPerPageOptions={[25, 50, 100]}
+                        onChangeRowsPerPage={this.handleRowNumChange}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>

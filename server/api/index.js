@@ -25,35 +25,51 @@ router.get('/fetch', (req, res) => {
 
 // Takes 2 params: page number (page), number per page(limit)
 router.get('/user/:id', (req, res) => {
+    console.log('request made!');
     const limit = parseInt(req.query.limit);
     const page = parseInt(req.query.page);
+    const order = req.query.order;
+    let sort;
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
 
-    const skip = (page - 1) * limit;
-    let numPages;
-    let totalDocs;
+    if (order == 'newFirst') {
+        sort = -1;
+    } else {
+        sort = 1
+    }
 
-    Tweet.countDocuments({user : req.params.id}, (err, count) => {
+    const skip = (page) * limit;
+
+    let query = {user: req.params.id}
+
+    if (req.query.search) {
+        query.$text = {$search: req.query.search}
+    }
+
+    Tweet
+    .find(query)
+    .where('date').gte(startDate).lte(endDate)
+    .sort({date: sort})
+    .skip(skip)
+    .limit(limit)
+    .exec( (err, docs) => {
         if (err) {
-            console.err(err);
+            console.error(err);
+            res.json(null);
         } else {
-            totalDocs = count;
-            numPages = Math.ceil(totalDocs / limit);
-
-            Tweet
-            .find({user : req.params.id})
-            .sort({date: -1})
-            .skip(skip)
-            .limit(limit)
-            .exec( (err, docs) => {
-                if (err) {
-                    console.err(err);
+            Tweet.countDocuments(query)
+            .where('date').gte(startDate).lte(endDate)
+            .exec((err, count) => {
+                if(err) {
+                    console.error(err)
                     res.json(null);
                 } else {
-                    res.json({tweets: docs, numPages: numPages});
+                    res.json({count: count, tweets: docs});
                 }
             })
         }
-    });
+    })
 })
 
 module.exports = router;

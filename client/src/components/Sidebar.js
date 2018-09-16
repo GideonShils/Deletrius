@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -111,7 +110,7 @@ class Sidebar extends Component {
           />
         </Grid>
         {/* Datepicker */}
-        <Grid item alignItems="center">
+        <Grid item>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <Grid item>
               <DatePicker
