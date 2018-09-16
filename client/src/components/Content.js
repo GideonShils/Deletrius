@@ -44,29 +44,17 @@ class Content extends Component {
         <div className="mainContent">
           {this.state.fetched ? (
             <div className="fetchedContent">
-              <FetchButton onClick={this.handleFetchClick} text="Fetch tweets again"/>
               <Tweets />
             </div>
           ) : (
             <div className="emptyContent">
               <h3>Click fetch tweets to import your latest 3200 tweets</h3>
-              <FetchButton onClick={this.handleFetchClick} text="Fetch tweets"/>
             </div>
           )}
         </div>
       </div>
     );
   }
-}
-
-function FetchButton(props) {
-  return (
-    <div>
-        <button onClick={props.onClick}>
-          {props.text}
-        </button>
-      </div>
-  )
 }
 
 export default Content;

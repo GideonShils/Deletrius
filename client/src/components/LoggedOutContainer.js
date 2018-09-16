@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
 
 class LoggedOutContainer extends Component {
   
@@ -6,7 +7,13 @@ class LoggedOutContainer extends Component {
     return (
       <div className="loggedOutContainer">
         <Header />
-        <LoginButton />
+        <Button
+          color="primary" 
+          href="http://127.0.0.1:3001/auth/twitter"
+          variant="contained"
+        >
+          Login with twitter
+        </Button>
       </div>
     );
   }
@@ -18,16 +25,6 @@ function Header(props) {
       <h1>Twitter Delete</h1>
     </div>
   )
-}
-
-function LoginButton(props) {
-    return (
-        <a href="http://127.0.0.1:3001/auth/twitter">
-          <button>
-            Sign in
-          </button>
-        </a>
-    )
 }
 
 export default LoggedOutContainer;

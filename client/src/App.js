@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import LoggedInContainer from './components/LoggedInContainer';
 import LoggedOutContainer from './components/LoggedOutContainer';
 import './App.css';
@@ -69,20 +70,23 @@ class App extends Component {
   
   render() {
     return (
-     this.state.isAuthenticated ? (
-       <div>
-        {console.log("Rendering authenticated")}
-        <LoggedInContainer 
-          user={this.state.user}
-          handleLogoutClick={this.handleLogoutClick} 
-        />
-       </div>
-      ) : (
-        <div>
-        {console.log("Rendering not authenticated")}
-        <LoggedOutContainer />
-       </div>
-      )
+      <React.Fragment>
+        <CssBaseline />
+        {this.state.isAuthenticated ? (
+          <div>
+            {console.log("Rendering authenticated")}
+            <LoggedInContainer 
+              user={this.state.user}
+              handleLogoutClick={this.handleLogoutClick} 
+            />
+          </div>
+        ) : (
+          <div>
+            {console.log("Rendering not authenticated")}
+            <LoggedOutContainer />
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }
