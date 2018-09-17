@@ -17,13 +17,27 @@ class LoggedInContainer extends Component {
       count: 0,
       startDate: new Date('2006-03-21T00:00:00'),
       endDate: new Date(),
-      order: 'newFirst'
+      order: 'newFirst',
+      searchVal: '',
+      search: ''
     }
     
     this.handleFetchClick = this.handleFetchClick.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleOrderChange = this.handleOrderChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+  }
+
+  handleSearchChange(e) {
+    this.setState({searchVal: e.target.value})
+  }
+
+  handleSearch(e) {
+    if (e.keyCode === 13) {
+      this.setState({search: this.state.searchVal});
+    }
   }
 
   handleStartDateChange(date) {
@@ -60,7 +74,7 @@ class LoggedInContainer extends Component {
       console.log(err)
     })
   }
-
+  
   render() {
     return (
       <Grid container spacing={0}>
@@ -76,6 +90,8 @@ class LoggedInContainer extends Component {
             user={this.props.user}
             fetched={this.state.fetched}
             handleFetchClick={this.handleFetchClick}
+            handleSearch={this.handleSearch}
+            handleSearchChange={this.handleSearchChange}
           />
         </Grid>
         <Grid item md={9}>
@@ -88,6 +104,7 @@ class LoggedInContainer extends Component {
             order={this.state.order}
             startDate={this.state.startDate}
             endDate={this.state.endDate}
+            search={this.state.search}
           />
         </Grid>
       </Grid>

@@ -16,14 +16,17 @@ class Content extends Component {
       rowsPerPage: 25,
       loading: false,
       tweetList: [],
-
-      /* should be props */
-      search: ''
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleRowNumChange = this.handleRowNumChange.bind(this);
     this.loadTweets = this.loadTweets.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.fetched) {
+      this.loadTweets();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -34,7 +37,8 @@ class Content extends Component {
     if (
       (prevProps.order !== this.props.order) ||
       (prevProps.startDate !== this.props.startDate) ||
-      (prevProps.endDate !== this.props.endDate)) {
+      (prevProps.endDate !== this.props.endDate) ||
+      (prevProps.search !== this.props.search)) {
         this.loadTweets();
       }
 
@@ -52,7 +56,7 @@ class Content extends Component {
         order: this.props.order,
         startDate: this.props.startDate,
         endDate: this.props.endDate,
-        search: this.state.search
+        search: this.props.search
       }
     })
     .then((res) => {

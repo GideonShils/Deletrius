@@ -79,6 +79,8 @@ class Sidebar extends Component {
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>}
+            onChange={this.props.handleSearchChange}
+            onKeyDown={this.props.handleSearch}
             placeholder="Search..."
           />
         </Grid>

@@ -45,6 +45,7 @@ class App extends Component {
       if (user) {
         localStorage.setItem('username', user.username);
         localStorage.setItem('photo', user.photo);
+        localStorage.setItem('userId', user.userId);
         this.setState({
           isAuthenticated: true,
           user: user,

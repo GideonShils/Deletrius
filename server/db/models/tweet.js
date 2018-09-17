@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 // Tweet schema
 const tweetSchema = new Schema({
-	user: Number,
+	user: String,
 	id_str: String,
 	data: Object,
 	date: Date

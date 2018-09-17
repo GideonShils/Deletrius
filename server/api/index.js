@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Fetch initial 3200 tweets using twitter API
 router.get('/fetch', (req, res) => {
+    console.log(req.session);
     const userId = req.user.userId;
     const t = new Twit(req.user.twit);
 
