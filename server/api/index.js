@@ -25,7 +25,6 @@ router.get('/fetch', (req, res) => {
 
 // Takes 2 params: page number (page), number per page(limit)
 router.get('/user/:id', (req, res) => {
-    console.log('request made!');
     const limit = parseInt(req.query.limit);
     const page = parseInt(req.query.page);
     const order = req.query.order;

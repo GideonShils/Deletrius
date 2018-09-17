@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 // Search
 import Input from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 // Datepicker
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
@@ -23,37 +24,6 @@ import Button from '@material-ui/core/Button';
  
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      startDate: new Date('2006-03-21T00:00:00'),
-      endDate: new Date(),
-      sort: 1
-    }
-
-    this.handleStartDateChange = this.handleStartDateChange.bind(this);
-    this.handleEndDateChange = this.handleEndDateChange.bind(this);
-    this.handleSortChange = this.handleSortChange.bind(this);
-  }
-
-  handleStartDateChange(date) {
-    this.setState({
-      startDate: date
-    })
-  }
-
-  handleEndDateChange(date) {
-    this.setState({
-      endDate: date
-    })
-  }
-
-  handleSortChange(event) {
-    this.setState({
-      [event.target.name] : event.target.value
-    })
-  }
 
   render() {
     return (
@@ -84,29 +54,32 @@ class Sidebar extends Component {
             Import archive
           </Button>
         </Grid>
+        {/* Sort */}
         <Grid item>
           <FormControl>
-            <InputLabel shrink htmlFor="sort-label-placeholder">
+            <InputLabel shrink htmlFor="order-label-placeholder">
               Sort
             </InputLabel>
             <Select
-              value={this.state.sort}
-              onChange={this.handleSortChange}
-              input={<Input name="sort" id="sort-label-placeholder" />}
+              value={this.props.order}
+              onChange={this.props.handleOrderChange}
+              input={<Input name="order" id="order-label-placeholder" />}
               displayEmpty
-              name="sort"
+              name="order"
             >
-              <MenuItem value={1}>Newest first</MenuItem>
-              <MenuItem value={2}>Oldest first</MenuItem>
+              <MenuItem value="newFirst">Newest first</MenuItem>
+              <MenuItem value="oldFirst">Oldest first</MenuItem>
             </Select>
           </FormControl>
         </Grid>
-        {/* Datepicker */}
+        {/* Search */}
         <Grid item>
-        <SearchIcon />
-          <Input 
+          <Input
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>}
             placeholder="Search..."
-            disableUnderline
           />
         </Grid>
         {/* Datepicker */}
@@ -114,8 +87,8 @@ class Sidebar extends Component {
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <Grid item>
               <DatePicker
-                value={this.state.startDate}
-                onChange={this.handleStartDateChange}
+                value={this.props.startDate}
+                onChange={this.props.handleStartDateChange}
                 label="Start date"
                 disableFuture
                 showTodayButton
@@ -126,8 +99,8 @@ class Sidebar extends Component {
             </Grid>
             <Grid item>
               <DatePicker
-                value={this.state.endDate}
-                onChange={this.handleEndDateChange}
+                value={this.props.endDate}
+                onChange={this.props.handleEndDateChange}
                 label="End date"
                 disableFuture
                 showTodayButton

@@ -14,48 +14,50 @@ class LoggedInContainer extends Component {
       fetched: fetched,
       fetching: false,
       tweetList: [],
-      count: 0
+      count: 0,
+      startDate: new Date('2006-03-21T00:00:00'),
+      endDate: new Date(),
+      order: 'newFirst'
     }
-
+    
     this.handleFetchClick = this.handleFetchClick.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.handleOrderChange = this.handleOrderChange.bind(this);
+  }
+
+  handleStartDateChange(date) {
+    this.setState({
+      startDate: date.toDate()
+    })
+  }
+
+  handleEndDateChange(date) {
+    this.setState({
+      endDate: date.toDate()
+    })
+  }
+
+  handleOrderChange(event) {
+    this.setState({
+      [event.target.name] : event.target.value
+    })
   }
 
   handleFetchClick() {
     this.setState({
       fetching: true
     })
-    console.log('fetching...');
     axios.get('http://127.0.0.1:3001/api/fetch')
     .then((res) => {
-      console.log('loading...');
-      let url = 'http://127.0.0.1:3001/api/user/' + this.props.user.userId;
-      axios.get(url, {
-        params: {
-          page: 0,
-          limit: 25,
-          order: 'newFirst',
-          startDate: new Date('2006-03-21'),
-          endDate: new Date(),
-          search: ''
-        }
-      })
-      .then((res) => {
-        console.log('changing state...');
-        localStorage.setItem('fetched', true);
-        console.log(res.data.numPages)
-        this.setState({
-          tweetList: res.data.tweets,
-          count: res.data.count,
-          fetching: false,
-          fetched: true
-        })
-      })
-      .catch((err) => {
-        console.log(err)
+      localStorage.setItem('fetched', true);
+      this.setState({
+        fetching: false,
+        fetched: true
       })
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err)
     })
   }
 
@@ -64,6 +66,12 @@ class LoggedInContainer extends Component {
       <Grid container spacing={0}>
         <Grid item md={3}>
           <SideBar 
+            order={this.state.order}
+            handleOrderChange={this.handleOrderChange}
+            startDate={this.state.startDate}
+            handleStartDateChange={this.handleStartDateChange}
+            endDate={this.state.endD}
+            handleEndDateChange={this.handleEndDateChange}
             handleLogoutClick={this.props.handleLogoutClick} 
             user={this.props.user}
             fetched={this.state.fetched}
@@ -77,6 +85,9 @@ class LoggedInContainer extends Component {
             userId={this.props.user.userId}
             count={this.state.count}
             tweetList={this.state.tweetList}
+            order={this.state.order}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
           />
         </Grid>
       </Grid>
