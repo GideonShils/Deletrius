@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DropdownArrow from '@material-ui/icons/ArrowDropDown';
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Avater from '@material-ui/core/Avatar';
+
+const styles = {
+  avatar: {
+    width: 100,
+    height: 100,
+    margin: '0 auto',
+  }
+}
 
 class Profile extends Component {
   constructor(props) {
@@ -15,64 +23,55 @@ class Profile extends Component {
     }
 
     this.handleMenuOpen = this.handleMenuOpen.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleMenuOpen(e) {
+    console.log(e.currentTarget)
     this.setState({
-      open: true,
       anchorEl: e.currentTarget
-    })
-  }
-
-  handleLogout() {
-    this.setState({
-      open: false,
-      anchorEl: null
     })
   }
 
   handleClose() {
     this.setState({
-      open: false,
       anchorEl: null
     })
   }
 
-  handle
-
   render() {
+    const open = Boolean(this.state.anchorEl);
+    const { classes } = this.props
     return (
-      <Grid container>
-        <Grid item md={3}>
-          <Avatar 
-            alt={this.props.user.username}
-            src={this.props.user.photo}
-          />
-        </Grid>
-        <Grid item md={9}>
-          <Button
-            onClick={this.handleMenuOpen}
-            aria-owns={this.anchorEl ? 'menu' : null}
-            aria-haspopup="true"
-          >
-            {this.props.user.username}
-            <DropdownArrow />
-          </Button>
+      <div>
+        <Avater
+          alt={this.props.user.username}
+          src={this.props.user.photo}
+          className={classes.avatar}
+        />
+        
+        <Button
+          aria-owns={open ? "user-menu" : null}
+          aria-haspopup="true"
+          onClick={this.handleMenuOpen}
+        >
+          {this.props.user.username}
+          <DropdownArrow />
+        </Button>
 
-          <Menu
-            anchorEl={this.anchorEl}
-            id="menu"
-            open={this.state.open}
-            onClose={this.handleClose}
-          >
-            <MenuItem onClick={this.props.handleLogoutClick}>Logout</MenuItem>
-          </Menu>
-        </Grid>
-      </Grid>
+        <Menu
+          id="user-menu"
+          anchorEl={this.anchorEl}
+          open={open}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.props.handleLogoutClick}>Logout</MenuItem>
+          <MenuItem onClick={this.props.handleFetchClick}>Fetch Tweets</MenuItem>
+          <MenuItem onClick={this.props.handleFetchClick}>Import Archive</MenuItem>
+        </Menu>
+      </div>
     );
   }
 }
 
-export default Profile;
+export default withStyles(styles)(Profile);

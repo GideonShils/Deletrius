@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import Tweet from 'react-tweet';
+import Tweet from './Tweet';
+import Paper from '@material-ui/core/Paper';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 
 class Tweets extends Component {
 
@@ -8,7 +13,13 @@ class Tweets extends Component {
     return (
       <div>
         {this.props.tweetList.map(t =>
-          <Tweet data={t.data} key={t.data.id_str} linkProps={linkProps} />
+          <div onClick={(e) => this.props.onClick(e, t.data.id_str)} key={t.data.id_str}>
+            <Tweet 
+              isSelected={this.props.selectedTweets.includes(t.data.id_str)} 
+              data={t.data}
+              linkProps={linkProps} 
+            />
+          </div>
         )}
       </div>
     );

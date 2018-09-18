@@ -72,4 +72,66 @@ router.get('/user/:id', (req, res) => {
     })
 })
 
+// Takes 2 params: page number (page), number per page(limit)
+router.delete('/user/:id', (req, res) => {
+    const t = new Twit(req.user.twit);
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    let query = {user: req.params.id}
+
+    if (req.query.search) {
+        query.$text = {$search: String(req.query.search)}
+    }
+
+    Tweet
+    .find(query)
+    .where('date').gte(startDate).lte(endDate)
+    .exec( (err, docs) => {
+        if (err) {
+            console.error(err);
+            res.json(null);
+        } else {
+            docs.forEach(doc => {
+                t.post('statuses/destroy/:id', {id: doc.id_str}, (err, data, res) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        Tweet.deleteOne({id_str: doc.id_str}, (err, doc) => {
+                            if (err) {
+                                console.error(err)
+                            }
+                        })
+                    }
+                })
+                
+
+            });
+            res.send();
+        }
+    })
+})
+
+// Takes 2 params: page number (page), number per page(limit)
+router.delete('/deleteSelected', (req, res) => {
+    const t = new Twit(req.user.twit);
+    console.log(req.body)
+
+    req.body.forEach(tweetId => {
+        t.post('statuses/destroy/:id', {id: tweetId}, (err, data, res) => {
+            if (err) {
+                console.error(err);
+            } else {
+                Tweet.deleteOne({id_str: tweetId}, (err, doc) => {
+                    if (err) {
+                        console.error(err)
+                    }
+                })
+            }
+        })
+    });
+
+    res.send();
+})
+
 module.exports = router;

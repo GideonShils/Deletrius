@@ -8,34 +8,18 @@ class Topbar extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      allSelected: false,
-      selected: false
-    }
 
-    this.handleSelectAll = this.handleSelectAll.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
+    this.handleDeleteAll = this.handleDeleteAll.bind(this);
   }
 
-  handleSelectAll() {
-    if (this.state.allSelected) {
-      this.setState({ 
-        allSelected: false,
-        selected: false
-      
-      })
-    } else {
-      this.setState({ 
-        allSelected: true,
-        selected: true
-      })
-    }
+  handleDeleteSelected() {
+    
   }
 
-  handleDelete() {
+  handleDeleteAll() {
 
   }
-
 
   render() {
     return (
@@ -44,21 +28,21 @@ class Topbar extends Component {
         <Grid container spacing={8}>
           <Grid item>
             <Button
-              onClick={this.handleSelectAll}
+              disabled={!this.props.selected}
               variant="contained"
               color="secondary"
+              onClick={this.props.handleDeleteSelectedClick}
             >
-              {this.state.allSelected ? 'deselect all' : 'select all'}
+              Delete Selected
             </Button>
           </Grid>
           <Grid item>
             <Button
-              disabled={!this.state.selected}
-              onClick={this.handleDelete}
+              onClick={this.props.handleDeleteAllClick}
               variant="contained"
               color="secondary"
             >
-              Delete Selected
+              Delete all
             </Button>
           </Grid>
         </Grid>

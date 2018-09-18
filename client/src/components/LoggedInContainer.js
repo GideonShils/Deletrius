@@ -105,6 +105,7 @@ class LoggedInContainer extends Component {
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             search={this.state.search}
+            handleFetchClick={this.handleFetchClick}
           />
         </Grid>
       </Grid>

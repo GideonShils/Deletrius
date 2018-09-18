@@ -18,42 +18,21 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-
-// Import
-import Button from '@material-ui/core/Button';
  
 
 class Sidebar extends Component {
 
   render() {
     return (
-      <Grid container spacing={16} direction="column" alignItems="center">
-        {/* Profile */}
+      <Grid container spacing={16} direction="column" alignItems="flex-start">
         <Grid item>
-          <Profile
+          <Profile 
+            user = {this.props.user}
+            handleFetchClick={this.props.handleFetchClick}
             handleLogoutClick={this.props.handleLogoutClick}
-            user={this.props.user}
           />
         </Grid>
-        {/* Fetch */}
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.props.handleFetchClick}
-          >
-            {this.props.fetched ? 'Fetch again' : 'Fetch tweets'}
-          </Button>
-        </Grid>
-        {/* Import */}
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-          >
-            Import archive
-          </Button>
-        </Grid>
+
         {/* Sort */}
         <Grid item>
           <FormControl>
@@ -87,20 +66,21 @@ class Sidebar extends Component {
         {/* Datepicker */}
         <Grid item>
           <MuiPickersUtilsProvider utils={MomentUtils}>
-            <Grid item>
-              <DatePicker
-                value={this.props.startDate}
-                onChange={this.props.handleStartDateChange}
-                label="Start date"
-                disableFuture
-                showTodayButton
-                autoOk
-                format="MMM Do, YYYY" // Moment formatting 
-                minDate="2006-03-21"
-              />
-            </Grid>
-            <Grid item>
-              <DatePicker
+            <DatePicker
+              value={this.props.startDate}
+              onChange={this.props.handleStartDateChange}
+              label="Start date"
+              disableFuture
+              showTodayButton
+              autoOk
+              format="MMM Do, YYYY" // Moment formatting 
+              minDate="2006-03-21"
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DatePicker
                 value={this.props.endDate}
                 onChange={this.props.handleEndDateChange}
                 label="End date"
@@ -110,7 +90,6 @@ class Sidebar extends Component {
                 format="MMM Do, YYYY" // Moment formatting
                 minDate="2006-03-21"
               />
-            </Grid>
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>

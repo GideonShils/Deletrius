@@ -12,13 +12,15 @@ const strategy = new TwitterStrategy (
 	function(token, tokenSecret, profile, callback) {
 		const query = { userId: profile.id };
 
+		const largePhoto = profile.photos[0].value.replace('normal', '400x400');
+
 		const updates = {
 			userId: profile.id,
 			userToken: token,
 			userTokenSecret: tokenSecret,
 			username: profile.username,
 			displayname: profile.displayName,
-			photo: profile.photos[0].value,
+			photo: largePhoto,
 			twit: {
 				consumer_key: process.env.CONSUMER_KEY,
 				consumer_secret: process.env.CONSUMER_SECRET,
