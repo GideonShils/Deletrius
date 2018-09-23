@@ -162,6 +162,8 @@ class Content extends Component {
           handleDeleteSelectedClick={this.handleDeleteSelectedClick}
           handleDeleteAllClick={this.handleDeleteAllClick}
           className={classes.topBar}
+          total={this.state.count}
+          selectedCount={this.state.selectedTweets.length}
         />
         
         <div className={classes.container}>

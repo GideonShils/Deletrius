@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   topbar: {
@@ -15,6 +15,10 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit * 2,
     float: 'right'
+  },
+  count: {
+    color: '#fff',
+    float: 'left',
   }
 })
 
@@ -24,6 +28,18 @@ class Topbar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.topbar}>
+        <Typography className={classes.count} variant="subheading">
+          {this.props.selectedCount}/{this.props.total} selected
+        </Typography>
+        <Button
+          onClick={this.props.handleDeleteAllClick}
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
+          Delete all
+        </Button>
+
         <Button
           disabled={!this.props.selected}
           variant="contained"
@@ -32,15 +48,6 @@ class Topbar extends Component {
           className={classes.button}
         >
           Delete Selected
-        </Button>
-
-        <Button
-          onClick={this.props.handleDeleteAllClick}
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-        >
-          Delete all
         </Button>
         </div>
     );
