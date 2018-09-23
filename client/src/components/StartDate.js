@@ -24,24 +24,15 @@ class DateRange extends Component {
           <DatePicker
             value={this.props.startDate}
             onChange={this.props.handleStartDateChange}
-            label="Start date"
             disableFuture
             showTodayButton
             autoOk
+            clearable={true}
             format="MMM Do, YYYY" // Moment formatting
+            InputProps={{
+              disableUnderline: true,
+            }}
           />
-        </MuiPickersUtilsProvider>
-      
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <DatePicker
-              value={this.props.endDate}
-              onChange={this.props.handleEndDateChange}
-              label="End date"
-              disableFuture
-              showTodayButton
-              autoOk
-              format="MMM Do, YYYY" // Moment formatting
-            />
         </MuiPickersUtilsProvider>
       </div>
     );
