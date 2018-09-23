@@ -58,27 +58,32 @@ function saveTweets(tweets, userId, callback) {
 
 
     console.log('adding tweets');
-    tweets.forEach(tweetData => {
-        const date = moment.utc(tweetData.created_at, 'ddd MMM DD HH:mm:ss Z YYYY');
-        const query = { user: userId, id_str: tweetData.id_str };
-
-        const updates = {
-            user: userId,
-            id_str: tweetData.id_str,
-            data: tweetData,
-            date: date.toDate()
-        }
-        
-        Tweet.findOneAndUpdate(query, updates, options, (err, doc) => {
-            if (err) {
-                console.err(err);
-                callback(err);
-            } else {
-                count++;
-                if (count == [tweets.length]) {
-                    callback(null, {count: count});
-                }
+    
+    if (tweets.length > 0) {
+        tweets.forEach(tweetData => {
+            const date = moment.utc(tweetData.created_at, 'ddd MMM DD HH:mm:ss Z YYYY');
+            const query = { user: userId, id_str: tweetData.id_str };
+    
+            const updates = {
+                user: userId,
+                id_str: tweetData.id_str,
+                data: tweetData,
+                date: date.toDate()
             }
-        });
-    })
+            
+            Tweet.findOneAndUpdate(query, updates, options, (err, doc) => {
+                if (err) {
+                    console.err(err);
+                    callback(err);
+                } else {
+                    count++;
+                    if (count == [tweets.length]) {
+                        callback(null, {count: count});
+                    }
+                }
+            });
+        })
+    } else {
+        callback(null, {count: 0})
+    }
 }

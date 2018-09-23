@@ -77,18 +77,18 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         {this.state.isAuthenticated ? (
-          <div>
+          <React.Fragment>
             {console.log("Rendering authenticated")}
             <LoggedInContainer 
               user={this.state.user}
-              handleLogoutClick={this.handleLogoutClick} 
+              handleLogoutClick={this.handleLogoutClick}
             />
-          </div>
+          </React.Fragment>
         ) : (
-          <div>
+          <React.Fragment>
             {console.log("Rendering not authenticated")}
             <LoggedOutContainer />
-          </div>
+          </React.Fragment>
         )}
       </React.Fragment>
     );

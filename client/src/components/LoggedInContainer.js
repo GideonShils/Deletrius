@@ -2,7 +2,27 @@ import React, { Component } from 'react';
 import SideBar from './Sidebar';
 import Content from './Content';
 import Grid from '@material-ui/core/Grid';
+import TopBar from './Topbar';
+
 import axios from 'axios';
+
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+  sidebar: {
+    background: '#fff',
+    zIndex: 0,
+    boxShadow: '1px 0px 8px 0px rgba(0,0,0,0.15)',
+    width: '25%',
+    float: 'left',
+    height: '100%',
+    position: 'fixed'
+  },
+  content: {
+    width: '75%',
+    float: 'right'
+  }
+}
 
 class LoggedInContainer extends Component {
 
@@ -15,7 +35,7 @@ class LoggedInContainer extends Component {
       fetching: false,
       tweetList: [],
       count: 0,
-      startDate: new Date('2006-03-21T00:00:00'),
+      startDate: new Date('2006-03-20T00:00:00.000+00:00'),
       endDate: new Date(),
       order: 'newFirst',
       searchVal: '',
@@ -76,9 +96,10 @@ class LoggedInContainer extends Component {
   }
   
   render() {
+    const { classes } = this.props;
     return (
-      <Grid container spacing={0}>
-        <Grid item md={3}>
+      <React.Fragment>
+        <div className={classes.sidebar}>
           <SideBar 
             order={this.state.order}
             handleOrderChange={this.handleOrderChange}
@@ -93,8 +114,8 @@ class LoggedInContainer extends Component {
             handleSearch={this.handleSearch}
             handleSearchChange={this.handleSearchChange}
           />
-        </Grid>
-        <Grid item md={9}>
+        </div>
+        <div className={classes.content}>
           <Content 
             fetched={this.state.fetched}
             fetching={this.state.fetching}
@@ -106,11 +127,12 @@ class LoggedInContainer extends Component {
             endDate={this.state.endDate}
             search={this.state.search}
             handleFetchClick={this.handleFetchClick}
+            className={classes.content}
           />
-        </Grid>
-      </Grid>
+        </div>
+      </React.Fragment>
     );
   }
 }
 
-export default LoggedInContainer;
+export default withStyles(styles)(LoggedInContainer);

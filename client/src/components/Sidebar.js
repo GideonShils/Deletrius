@@ -1,100 +1,48 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
+import Search from './Search';
+import Sort from './Sort';
+import DateRange from './DateRange';
 
-// Search
-import Input from '@material-ui/core/Input';
-import SearchIcon from '@material-ui/icons/Search';
-import InputAdornment from '@material-ui/core/InputAdornment';
-
-// Datepicker
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
-import DatePicker from 'material-ui-pickers/DatePicker';
-
-// Sort
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
- 
+const styles = {
+  root: {
+    
+  }
+}
 
 class Sidebar extends Component {
 
   render() {
+    const { classes } = this.props;
     return (
-      <Grid container spacing={16} direction="column" alignItems="flex-start">
-        <Grid item>
-          <Profile 
+        <div className={classes.root}>
+          <Profile
             user = {this.props.user}
             handleFetchClick={this.props.handleFetchClick}
             handleLogoutClick={this.props.handleLogoutClick}
           />
-        </Grid>
-
-        {/* Sort */}
-        <Grid item>
-          <FormControl>
-            <InputLabel shrink htmlFor="order-label-placeholder">
-              Sort
-            </InputLabel>
-            <Select
-              value={this.props.order}
-              onChange={this.props.handleOrderChange}
-              input={<Input name="order" id="order-label-placeholder" />}
-              displayEmpty
-              name="order"
-            >
-              <MenuItem value="newFirst">Newest first</MenuItem>
-              <MenuItem value="oldFirst">Oldest first</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        {/* Search */}
-        <Grid item>
-          <Input
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>}
-            onChange={this.props.handleSearchChange}
-            onKeyDown={this.props.handleSearch}
-            placeholder="Search..."
+        
+          <Search
+            handleSearchChange={this.props.handleSearchChange}
+            handleSearch={this.props.handleSearch}
           />
-        </Grid>
-        {/* Datepicker */}
-        <Grid item>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <DatePicker
-              value={this.props.startDate}
-              onChange={this.props.handleStartDateChange}
-              label="Start date"
-              disableFuture
-              showTodayButton
-              autoOk
-              format="MMM Do, YYYY" // Moment formatting 
-              minDate="2006-03-21"
-            />
-          </MuiPickersUtilsProvider>
-        </Grid>
-        <Grid item>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <DatePicker
-                value={this.props.endDate}
-                onChange={this.props.handleEndDateChange}
-                label="End date"
-                disableFuture
-                showTodayButton
-                autoOk
-                format="MMM Do, YYYY" // Moment formatting
-                minDate="2006-03-21"
-              />
-          </MuiPickersUtilsProvider>
-        </Grid>
-      </Grid>
+
+          <Sort 
+            order={this.props.order}
+            handleOrderChange={this.props.handleOrderChange}
+          />
+
+          <DateRange 
+            startDate={this.props.startDate}
+            handleStartDateChange={this.props.handleStartDateChange}
+            endDate={this.props.endDate}
+            handleEndDateChange={this.props.handleEndDateChange}
+          />
+        </div>
     );
   }
 }
 
-export default Sidebar;
+export default withStyles(styles)(Sidebar);

@@ -1,55 +1,48 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  topbar: {
+    background: '#4253AF',
+    padding: theme.spacing.unit * 2,
+    width: '100%',
+    position: 'fixed',
+    zIndex: '999',
+    boxShadow: '1px 0px 8px 0px rgba(0,0,0,0.15)'
+  },
+  button: {
+    marginRight: theme.spacing.unit * 2
+  }
+})
 
 class Topbar extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
-    this.handleDeleteAll = this.handleDeleteAll.bind(this);
-  }
-
-  handleDeleteSelected() {
-    
-  }
-
-  handleDeleteAll() {
-
-  }
-
   render() {
+    const { classes } = this.props;
     return (
-      <AppBar position="static">
-        <Toolbar>
-        <Grid container spacing={8}>
-          <Grid item>
-            <Button
-              disabled={!this.props.selected}
-              variant="contained"
-              color="secondary"
-              onClick={this.props.handleDeleteSelectedClick}
-            >
-              Delete Selected
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              onClick={this.props.handleDeleteAllClick}
-              variant="contained"
-              color="secondary"
-            >
-              Delete all
-            </Button>
-          </Grid>
-        </Grid>
-        </Toolbar>
-      </AppBar>
+      <div className={classes.topbar}>
+        <Button
+          disabled={!this.props.selected}
+          variant="contained"
+          color="secondary"
+          onClick={this.props.handleDeleteSelectedClick}
+          className={classes.button}
+        >
+          Delete Selected
+        </Button>
+
+        <Button
+          onClick={this.props.handleDeleteAllClick}
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
+          Delete all
+        </Button>
+        </div>
     );
   }
 }
 
-export default Topbar;
+export default withStyles(styles)(Topbar);

@@ -6,13 +6,21 @@ import DropdownArrow from '@material-ui/icons/ArrowDropDown';
 import { withStyles } from '@material-ui/core/styles';
 import Avater from '@material-ui/core/Avatar';
 
-const styles = {
+const styles = theme => ({
+  root: {
+    textAlign: 'center',
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2
+  },
   avatar: {
     width: 100,
     height: 100,
-    margin: '0 auto',
+    margin: '0 auto'
+  },
+  profileButton: {
+    marginTop: theme.spacing.unit * 2
   }
-}
+})
 
 class Profile extends Component {
   constructor(props) {
@@ -43,7 +51,7 @@ class Profile extends Component {
     const open = Boolean(this.state.anchorEl);
     const { classes } = this.props
     return (
-      <div>
+      <div className={classes.root}>
         <Avater
           alt={this.props.user.username}
           src={this.props.user.photo}
@@ -54,6 +62,7 @@ class Profile extends Component {
           aria-owns={open ? "user-menu" : null}
           aria-haspopup="true"
           onClick={this.handleMenuOpen}
+          className={classes.profileButton}
         >
           {this.props.user.username}
           <DropdownArrow />

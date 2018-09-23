@@ -17,9 +17,14 @@ router.get('/fetch', (req, res) => {
         if (err) {
             console.err(err);
             res.send({msg: 'error'});
+            res.end();
+        } else if (data.length === 0) {
+            console.log('no tweets');
+            res.send();
         } else {
             console.log('Saved ' + data.count + ' tweets');
             res.send({msg: 'success'});
+            res.end();
         }
     });
 });
@@ -92,22 +97,25 @@ router.delete('/user/:id', (req, res) => {
             console.error(err);
             res.json(null);
         } else {
+            let count = 0;
             docs.forEach(doc => {
-                t.post('statuses/destroy/:id', {id: doc.id_str}, (err, data, res) => {
+                t.post('statuses/destroy/:id', {id: doc.id_str}, (err, data) => {
                     if (err) {
                         console.error(err);
                     } else {
-                        Tweet.deleteOne({id_str: doc.id_str}, (err, doc) => {
+                        count++;
+                        Tweet.deleteOne({id_str: doc.id_str}, (err) => {
                             if (err) {
                                 console.error(err)
+                            } else {
+                                if (count == docs.length) {
+                                    res.send();
+                                }
                             }
                         })
                     }
                 })
-                
-
             });
-            res.send();
         }
     })
 })
@@ -115,23 +123,29 @@ router.delete('/user/:id', (req, res) => {
 // Takes 2 params: page number (page), number per page(limit)
 router.delete('/deleteSelected', (req, res) => {
     const t = new Twit(req.user.twit);
-    console.log(req.body)
 
-    req.body.forEach(tweetId => {
-        t.post('statuses/destroy/:id', {id: tweetId}, (err, data, res) => {
+    const tweetIDs = req.body;
+    let count = 0;
+
+    tweetIDs.forEach(tweetId => {
+        t.post('statuses/destroy/:id', {id: tweetId}, (err, data) => {
             if (err) {
                 console.error(err);
             } else {
-                Tweet.deleteOne({id_str: tweetId}, (err, doc) => {
-                    if (err) {
-                        console.error(err)
-                    }
-                })
+                count++;
+                
+                if (count == tweetIDs.length) {
+                    Tweet.deleteMany({id_str: { $in: tweetIDs}}, (err) => {
+                        if (err) {
+                            console.error(err)
+                        } else {
+                            res.send();
+                        }
+                    })
+                }
             }
         })
     });
-
-    res.send();
 })
 
 module.exports = router;

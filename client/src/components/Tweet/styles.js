@@ -1,27 +1,6 @@
 export default {
   'tweet': {
-    'backgroundColor': '#ffffff',
     'minHeight': '51px',
-    'maxWidth': '588px',
-    'minWidth': '350px',
-    'borderBottom': '1px solid #e6ecf0',
-    'color': '#14171a',
-    'fontFamily': '"Helvetica Neue", "Helvetica", "Arial", "sans-serif"',
-    'fontSize': '14px',
-    'lineHeight': '20px',
-    'listStyleImage': 'none',
-    'listStylePosition': 'outisde',
-    'listStyleType': 'none',
-    'padding': '9px 12px',
-    'position': 'relative',
-    'textAlign': 'start'
-  },
-  'selected': {
-    'backgroundColor': '#f5f5f5',
-    'minHeight': '51px',
-    'maxWidth': '588px',
-    'minWidth': '350px',
-    'borderBottom': '1px solid #e6ecf0',
     'color': '#14171a',
     'fontFamily': '"Helvetica Neue", "Helvetica", "Arial", "sans-serif"',
     'fontSize': '14px',
@@ -223,34 +202,5 @@ export default {
     'maxHeight': '508px',
     'objectFit': 'contain',
     'background': '#000000'
-  },
-  'Modal': {
-    'position': 'fixed',
-    'top': 0,
-    'left': 0,
-    'zIndex': 999999999999,
-    'overflowX': 'hidden',
-    'textAlign': 'center',
-    'background': 'rgba(0, 0, 0, 0.8)',
-    'display': 'table',
-    'width': '100%',
-    'height': '100vh'
-  },
-  'ModalClose': {
-    'position': 'fixed',
-    'top': 0,
-    'left': 0,
-    'zIndex': 10,
-    'overflowX': 'hidden',
-    'textAlign': 'center',
-    'display': 'table',
-    'width': '100%',
-    'height': '100vh'
-  },
-  'ModalInner': {
-    'display': 'table-cell',
-    'verticalAlign': 'middle',
-    'position': 'relative',
-    'zIndex': 20
   }
 }
