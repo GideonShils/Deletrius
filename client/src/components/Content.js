@@ -9,9 +9,12 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
+  container: {
+    marginTop: theme.spacing.unit * 12
+  },
   fetchInstructions: {
     margin: theme.spacing.unit * 4,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 4
   },
   button: {
     margin: theme.spacing.unit * 2
@@ -20,8 +23,15 @@ const styles = theme => ({
     zIndex: 9999,
   },
   tweets: {
-    padding: theme.spacing.unit * 4,
-    marginTop: theme.spacing.unit * 8
+    /*padding: theme.spacing.unit * 4*/
+  },
+  fetching: {
+    margin: '0 auto',
+    textAlign: 'center'
+  },
+  loading: {
+    margin: '0 auto',
+    textAlign: 'center'
   }
 })
 
@@ -154,71 +164,73 @@ class Content extends Component {
           className={classes.topBar}
         />
         
-        {(this.props.fetched || this.props.fetching) ? (
-          <React.Fragment>
-            {this.props.fetching ? (
-              <div>
-                <h3>Fetching tweets. Please wait...</h3>
-                <CircularProgress color="primary"/>
-              </div>
-            ) : (
-              <React.Fragment>
-                {this.state.loading ? (
-                  <div>
-                    <h3>Loading tweets. Please wait...</h3>
-                    <CircularProgress color="primary"/>
-                  </div>
-                ) : (
-                  <React.Fragment>
-                    <div className={classes.tweets}>
-                      <Tweets 
-                        onClick={this.handleTweetClick} 
-                        tweetList={this.state.tweetList}
-                        selectedTweets={this.state.selectedTweets}
-                      />
+        <div className={classes.container}>
+          {(this.props.fetched || this.props.fetching) ? (
+            <React.Fragment>
+              {this.props.fetching ? (
+                <div className={classes.fetching}>
+                  <h3>Fetching tweets. Please wait...</h3>
+                  <CircularProgress color="primary"/>
+                </div>
+              ) : (
+                <React.Fragment>
+                  {this.state.loading ? (
+                    <div className={classes.loading}>
+                      <h3>Loading tweets. Please wait...</h3>
+                      <CircularProgress color="primary"/>
                     </div>
-                    <TablePagination 
-                      count={this.state.count}
-                      page={this.state.page} 
-                      rowsPerPage={this.state.rowsPerPage}
-                      component="div"
-                      onChangePage={this.handlePageChange}
-                      rowsPerPageOptions={[25, 50, 100]}
-                      onChangeRowsPerPage={this.handleRowNumChange}
-                    />
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        ) : (
-          <Paper className={classes.fetchInstructions} elevation={1} square={true}>
-            <h3>Import your tweets to get started</h3>
-            <p>The easiest way to import your tweets is directly through twitter.
-                However, Twitter enforces a 3200 tweet limit for imports with their API.
-                If you have fewer than 3200 tweets, click the fetch tweets button below.</p>
-            <p>If you need to import more than 3200 tweets, you can import a twitter archive
-                file which can be created through <a href="https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive">Twitter</a>
-                . Once you've created an archive, you can import it below.</p>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.props.handleFetchClick}
-              className={classes.button}
-            >
-              Fetch tweets
-            </Button>
+                  ) : (
+                    <React.Fragment>
+                      <div className={classes.tweets}>
+                        <Tweets 
+                          onClick={this.handleTweetClick} 
+                          tweetList={this.state.tweetList}
+                          selectedTweets={this.state.selectedTweets}
+                        />
+                      </div>
+                      <TablePagination 
+                        count={this.state.count}
+                        page={this.state.page} 
+                        rowsPerPage={this.state.rowsPerPage}
+                        component="div"
+                        onChangePage={this.handlePageChange}
+                        rowsPerPageOptions={[25, 50, 100]}
+                        onChangeRowsPerPage={this.handleRowNumChange}
+                      />
+                    </React.Fragment>
+                  )}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          ) : (
+            <Paper className={classes.fetchInstructions} elevation={1} square={true}>
+              <h3>Import your tweets to get started</h3>
+              <p>The easiest way to import your tweets is directly through twitter.
+                  However, Twitter enforces a 3200 tweet limit for imports with their API.
+                  If you have fewer than 3200 tweets, click the fetch tweets button below.</p>
+              <p>If you need to import more than 3200 tweets, you can import a twitter archive
+                  file which can be created through <a href="https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive">Twitter</a>
+                  . Once you've created an archive, you can import it below.</p>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.props.handleFetchClick}
+                className={classes.button}
+              >
+                Fetch tweets
+              </Button>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.props.handleFetchClick}
-              className={classes.button}
-            >
-              Import archive
-            </Button>
-          </Paper>
-        )}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.props.handleFetchClick}
+                className={classes.button}
+              >
+                Import archive
+              </Button>
+            </Paper>
+          )}
+        </div>
       </React.Fragment>
     );
   }

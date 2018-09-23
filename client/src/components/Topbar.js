@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core';
 
 const styles = theme => ({
   topbar: {
     background: '#4253AF',
     padding: theme.spacing.unit * 2,
-    width: '100%',
+    width: '75%',
     position: 'fixed',
     zIndex: '999',
     boxShadow: '1px 0px 8px 0px rgba(0,0,0,0.15)'
   },
   button: {
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing.unit * 2,
+    float: 'right'
   }
 })
 
