@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import DatePicker from 'material-ui-pickers/DatePicker';
 import moment from 'moment';
 
-const styles = {
-  root: {
-    
-  }
-}
 
 moment.locale('en');
  
 class DateRange extends Component {
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -39,4 +32,4 @@ class DateRange extends Component {
   }
 }
 
-export default withStyles(styles)(DateRange);
+export default DateRange;

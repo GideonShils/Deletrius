@@ -3,21 +3,22 @@ import Tweet from './Tweet';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import classNames from 'classnames';
-
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  tweet : {
+  tweet: {
     marginBottom: theme.spacing.unit * 4,
     padding: theme.spacing.unit * 2,
     maxWidth: 588,
     minWidth: 350,
     margin: '0 auto'
   },
-  selected : {
+  selected: {
     backgroundColor: '#f5f5f5'
+  },
+  noTweets: {
+    margin: '0 auto',
+    textAlign: 'center'
   }
 })
 
@@ -43,18 +44,29 @@ class Tweets extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        {this.props.tweetList.map(t =>
-          <Paper
-            onClick={(e) => this.props.onClick(e, t.data.id_str)} 
-            key={t.data.id_str}
-            elevation={1}
-            className={ this.getClassnames(t.data.id_str) }
+        {this.props.tweetList.length > 0 ? (
+          <React.Fragment>
+            {this.props.tweetList.map(t =>
+              <Paper
+                onClick={(e) => this.props.onClick(e, t.data.id_str)} 
+                key={t.data.id_str}
+                elevation={1}
+                className={ this.getClassnames(t.data.id_str) }
+              >
+                <Tweet
+                  data={t.data}
+                  linkProps={linkProps} 
+                />
+              </Paper>
+            )}
+          </React.Fragment>
+        ) : (
+          <Typography 
+            className={classes.noTweets}
+            variant="subheading"
           >
-            <Tweet
-              data={t.data}
-              linkProps={linkProps} 
-            />
-          </Paper>
+            No tweets to display.
+          </Typography>
         )}
       </React.Fragment>
     );

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import SideBar from './Sidebar';
 import Content from './Content';
-import Grid from '@material-ui/core/Grid';
-import TopBar from './Topbar';
 
 import axios from 'axios';
 

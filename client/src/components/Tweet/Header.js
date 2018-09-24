@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles'
-import twemoji from 'twemoji'
+//import twemoji from 'twemoji'
 
 function VerifiedBadge() {
   return (
@@ -52,15 +52,16 @@ class Header extends React.Component {
       verified = <VerifiedBadge />;
     }
     
-
+    /*
     let {name} = data.user
     name = twemoji.parse(name)
     name = name.replace(/<img class="emoji"/g, '<img class="emoji" style="height:14px;margin-right:5px;"')
+    */
 
     return (
       <div className="header">
         <a className="account-group" style={styles.accountGroup} link={/*href={`https://twitter.com/${data.user.screen_name}`}*/1} {...linkProps}>
-          <img className="avatar" src={data.user.profile_image_url} style={styles.avatar} />
+          <img className="avatar" src={data.user.profile_image_url} style={styles.avatar} alt="avatar"/>
           <strong className="fullname" style={styles.fullname}>{data.user.name}</strong>
           {verified}
           <span>&nbsp;</span>

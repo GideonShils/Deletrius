@@ -4,14 +4,7 @@ import styles from './styles'
 import {cloneDeep} from './utils'
 
 class Photos extends React.Component {
-  constructor (props, context) {
-    super(props, context)
-  }
-/*
-  onClick (idx) {
-    this.context.toggleModal(idx)
-  }
-*/
+ 
   render () {
     let {media} = this.props
 
@@ -41,7 +34,7 @@ class Photos extends React.Component {
 
         // check if image is taller than maxHeight, if so
         // center it with a negative top value
-        const maxHeight = parseInt(mediaStyle.maxHeight.replace('px', ''))
+        const maxHeight = parseInt(mediaStyle.maxHeight.replace('px', ''), 10)
 
         if (mediaHeight > maxHeight) {
           photoStyle.top = `${(maxHeight - mediaHeight) / 2}px`
@@ -187,7 +180,7 @@ class Photos extends React.Component {
 
       mediaElements.push(
         <div className="AdaptiveMedia-photoContainer" style={containStyle} key={i}>
-          <img src={m.media_url} style={photoStyle} />
+          <img src={m.media_url} style={photoStyle} alt="media" />
         </div>
       )
     })
