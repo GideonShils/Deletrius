@@ -80,7 +80,7 @@ class LoggedInContainer extends Component {
     this.setState({
       fetching: true
     })
-    axios.get('http://127.0.0.1:3001/api/fetch')
+    axios.get('/api/fetch')
     .then((res) => {
       localStorage.setItem('fetched', true);
       this.setState({

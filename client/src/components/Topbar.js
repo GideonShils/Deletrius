@@ -112,7 +112,7 @@ class Topbar extends Component {
         <Dialog
           open={this.state.allOpen}
           onClose={this.handleCancelClick}
-          aria-labeledby="alert-dialog-title"
+          aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>
@@ -136,7 +136,7 @@ class Topbar extends Component {
         <Dialog
           open={this.state.selectedOpen}
           onClose={this.handleCancelClick}
-          aria-labeledby="alert-dialog-title"
+          aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>

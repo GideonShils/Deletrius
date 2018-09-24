@@ -5,9 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
     "start:server": "nodemon server/server.js --exec babel-node --ignore client",
     "start:client": "cd client && yarn start",
-    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
+    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -43,5 +45,8 @@
     "nodemon": "^1.18.4",
     "concurrently": "^3.6.1",
     "cors": "^2.8.4"
+  },
+  "engines": {
+    "node": "10.11.0"
   }
 }

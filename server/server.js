@@ -10,6 +10,7 @@ import passport from './passport';
 import authRouter from './auth';
 import apiRouter from './api';
 import db from './db';
+import path from 'path';
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret:  process.env.SESSION_SECRET,
     name: 'sessionId',
     resave: false,
     saveUninitialized: false,
@@ -45,6 +46,13 @@ app.use('/auth', authRouter);
 
 // Setup api routing
 app.use('/api', apiRouter);
+
+// Static resources
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
+})
 
 // Start server listening
 app.listen(app.get('port'), () => {

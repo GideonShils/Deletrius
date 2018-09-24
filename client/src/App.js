@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   checkAuth() {
-    axios.get('http://127.0.0.1:3001/auth/user')
+    axios.get('/auth/user')
     .then((res) => {
       let user = res.data;
 
@@ -60,7 +60,7 @@ class App extends Component {
 
   handleLogoutClick() {
     localStorage.clear();
-    axios.get('http://127.0.0.1:3001/auth/logout')
+    axios.get('/auth/logout')
     .then((res) => {
       this.setState({
         isAuthenticated : false,

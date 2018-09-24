@@ -64,7 +64,7 @@ class Content extends Component {
   }
 
   handleDeleteAllClick() {
-    let url = 'http://127.0.0.1:3001/api/user/' + this.props.userId;
+    let url = '/api/user/' + this.props.userId;
     axios.delete(url, {
       params: {
         startDate: this.props.startDate,
@@ -78,7 +78,7 @@ class Content extends Component {
   }
 
   handleDeleteSelectedClick() {
-    axios.delete(('http://127.0.0.1:3001/api/deleteSelected'), {
+    axios.delete(('/api/deleteSelected'), {
       data: this.state.selectedTweets
     }).then(() => {
       this.loadTweets();
@@ -120,7 +120,7 @@ class Content extends Component {
     this.setState({
       loading: true
     })
-    let url = 'http://127.0.0.1:3001/api/user/' + this.props.userId;
+    let url = '/api/user/' + this.props.userId;
     axios.get(url, {
       params: {
         page: this.state.page,
