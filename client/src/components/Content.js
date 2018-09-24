@@ -87,6 +87,7 @@ class Content extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetching && !this.props.fetching) {
+      console.log('loading')
       this.loadTweets();
     }
 
