@@ -1,7 +1,6 @@
 import passport from 'passport';
 import User from '../db/models/user';
 import TwitterStrategy from './twitterStrategy';
-// const TwitterStrategy = require('./twitterStrategy');
 
 passport.use(TwitterStrategy);
 
