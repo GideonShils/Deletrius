@@ -42,7 +42,7 @@ class LoggedOutContainer extends Component {
 
         <Button
           color="secondary" 
-          href="http://127.0.0.1:3001/auth/twitter"
+          href="/auth/twitter"
           variant="contained"
           className={classes.button}
         >
