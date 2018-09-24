@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
+    "start": "babel-node server/server.js",
     "start:server": "nodemon server/server.js --exec babel-node --ignore client",
     "start:client": "cd client && yarn start",
     "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\"",
@@ -36,7 +36,10 @@
     "passport": "^0.4.0",
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
