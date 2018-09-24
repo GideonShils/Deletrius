@@ -41,6 +41,8 @@ class Topbar extends Component {
     this.handleDeleteAllClick = this.handleDeleteAllClick.bind(this);
     this.handleDeleteSelectedClick = this.handleDeleteSelectedClick.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
+    this.handleDeleteAllConfirm = this.handleDeleteAllConfirm.bind(this);
+    this.handleDeleteSelectedConfirm = this.handleDeleteSelectedConfirm.bind(this);
   }
 
   handleCancelClick() {
@@ -59,6 +61,22 @@ class Topbar extends Component {
   handleDeleteSelectedClick() {
     this.setState({
       selectedOpen: true
+    })
+  }
+
+  handleDeleteAllConfirm() {
+    this.props.handleDeleteAllClick();
+
+    this.setState({
+      allOpen: false
+    })
+  }
+
+  handleDeleteSelectedConfirm() {
+    this.props.handleDeleteSelectedClick();
+
+    this.setState({
+      selectedOpen: false
     })
   }
 
@@ -90,6 +108,7 @@ class Topbar extends Component {
           </Button>
           </div>
 
+        {/* Confirm delete all */}
         <Dialog
           open={this.state.allOpen}
           onClose={this.handleCancelClick}
@@ -107,12 +126,13 @@ class Topbar extends Component {
             <Button onClick={this.handleCancelClick} color="primary" autoFocus>
               Cancel
             </Button>
-            <Button onClick={this.props.handleDeleteAllClick} color="secondary">
+            <Button onClick={this.handleDeleteAllConfirm} color="secondary">
               Delete
             </Button>
           </DialogActions>
         </Dialog>
 
+        {/* Confirm delete selected */}
         <Dialog
           open={this.state.selectedOpen}
           onClose={this.handleCancelClick}
@@ -130,7 +150,7 @@ class Topbar extends Component {
             <Button onClick={this.handleCancelClick} color="primary" autoFocus>
               Cancel
             </Button>
-            <Button onClick={this.props.handleDeleteSelectedClick} color="secondary">
+            <Button onClick={this.handleDeleteSelectedConfirm} color="secondary">
               Delete
             </Button>
           </DialogActions>
