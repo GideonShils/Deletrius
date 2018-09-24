@@ -20,7 +20,7 @@ app.set('port', process.env.PORT || 3001);
 app.use(cors({
     origin:['http://127.0.0.1:3000'],
     methods:['GET','POST', 'PUT', 'DELETE'],
-    credentials: true // enable set cookie
+    credentials: true
 }));
 
 app.use(helmet()); // Security
