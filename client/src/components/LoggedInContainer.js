@@ -105,7 +105,7 @@ class LoggedInContainer extends Component {
             handleOrderChange={this.handleOrderChange}
             startDate={this.state.startDate}
             handleStartDateChange={this.handleStartDateChange}
-            endDate={this.state.endD}
+            endDate={this.state.endDate}
             handleEndDateChange={this.handleEndDateChange}
             handleLogoutClick={this.props.handleLogoutClick} 
             user={this.props.user}
