@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
+const styles = theme => ({
   sidebar: {
     background: '#fff',
     zIndex: 0,
@@ -14,13 +14,23 @@ const styles = {
     width: '25%',
     float: 'left',
     height: '100%',
-    position: 'fixed'
+    position: 'fixed',
+    [theme.breakpoints.down('850')]: {
+      width: '100%',
+      height: 'auto',
+      position: 'static',
+      float: 'none'
+    }
   },
   content: {
     width: '75%',
-    float: 'right'
+    float: 'right',
+    [theme.breakpoints.down('850')]: {
+      width: '100%',
+      float: 'none'
+    }
   }
-}
+})
 
 class LoggedInContainer extends Component {
 

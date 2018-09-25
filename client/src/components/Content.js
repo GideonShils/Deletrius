@@ -10,7 +10,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   container: {
-    marginTop: theme.spacing.unit * 12
+    marginTop: theme.spacing.unit * 12,
+    [theme.breakpoints.down('850')]: {
+      marginTop: theme.spacing.unit * 4
+    }
   },
   fetchInstructions: {
     margin: theme.spacing.unit * 4,
@@ -23,7 +26,8 @@ const styles = theme => ({
     zIndex: 9999,
   },
   tweets: {
-    /*padding: theme.spacing.unit * 4*/
+    maxWidth: 588,
+    margin: '0 auto'
   },
   fetching: {
     margin: '0 auto',
@@ -32,6 +36,11 @@ const styles = theme => ({
   loading: {
     margin: '0 auto',
     textAlign: 'center'
+  },
+  pagination: {
+    [theme.breakpoints.down('850')]: {
+      marginBottom: 70
+    }
   }
 })
 
@@ -209,6 +218,7 @@ class Content extends Component {
                         onChangePage={this.handlePageChange}
                         rowsPerPageOptions={[25, 50, 100]}
                         onChangeRowsPerPage={this.handleRowNumChange}
+                        className={classes.pagination}
                       />
                     </React.Fragment>
                   )}

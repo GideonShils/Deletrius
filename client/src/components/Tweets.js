@@ -10,10 +10,13 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4,
     padding: theme.spacing.unit * 2,
     maxWidth: 588,
-    minWidth: 350,
     margin: '0 auto',
     '&:hover': {
       cursor: 'pointer'
+    },
+    [theme.breakpoints.down('850')]: {
+      marginLeft: theme.spacing.unit * 2,
+      marginRight: theme.spacing.unit * 2
     }
   },
   selected: {
@@ -46,7 +49,7 @@ class Tweets extends Component {
     const linkProps = { target: '_blank', rel: 'noreferrer' };
     const { classes } = this.props;
     return (
-      <React.Fragment>
+      <div>
         {this.props.tweetList.length > 0 ? (
           <React.Fragment>
             {this.props.tweetList.map(t =>
@@ -71,7 +74,7 @@ class Tweets extends Component {
             No tweets to display.
           </Typography>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

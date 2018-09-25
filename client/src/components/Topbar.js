@@ -16,7 +16,11 @@ const styles = theme => ({
     width: '75%',
     position: 'fixed',
     zIndex: '999',
-    boxShadow: '1px 0px 8px 0px rgba(0,0,0,0.15)'
+    boxShadow: '1px 0px 8px 0px rgba(0,0,0,0.15)',
+    [theme.breakpoints.down('850')]: {
+      bottom: 0,
+      width: '100%'
+    }
   },
   button: {
     marginRight: theme.spacing.unit * 2,

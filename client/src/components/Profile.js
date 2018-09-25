@@ -9,8 +9,8 @@ import Avater from '@material-ui/core/Avatar';
 const styles = theme => ({
   root: {
     textAlign: 'center',
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 2,
   },
   avatar: {
     width: 100,
