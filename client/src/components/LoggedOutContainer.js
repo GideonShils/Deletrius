@@ -24,6 +24,14 @@ class LoggedOutContainer extends Component {
   
   render() {
     const { classes } = this.props;
+    let loginUrl;
+
+    if (window.location.href == 'https://twitter-delete.herokuapp.com/') {
+      loginUrl = 'https://twitter-delete.herokuapp.com/auth/twitter';
+    } else {
+      loginUrl = 'http://127.0.0.1:3001/auth/twitter';
+    }
+
     return (
       <div className={classes.root}>
         <Typography
@@ -42,7 +50,7 @@ class LoggedOutContainer extends Component {
 
         <Button
           color="secondary" 
-          href="/auth/twitter"
+          href={loginUrl}
           variant="contained"
           className={classes.button}
         >

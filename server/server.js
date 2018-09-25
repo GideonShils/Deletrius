@@ -47,12 +47,14 @@ app.use('/auth', authRouter);
 // Setup api routing
 app.use('/api', apiRouter);
 
-// Static resources
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+if (process.env.NODE_ENV == "prod") {
+    // Static resources
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
-})
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
+    })
+}
 
 // Start server listening
 app.listen(app.get('port'), () => {
