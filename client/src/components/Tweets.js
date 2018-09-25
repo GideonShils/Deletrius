@@ -11,7 +11,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     maxWidth: 588,
     minWidth: 350,
-    margin: '0 auto'
+    margin: '0 auto',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
   selected: {
     backgroundColor: '#f5f5f5'

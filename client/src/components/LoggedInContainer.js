@@ -31,7 +31,6 @@ class LoggedInContainer extends Component {
     this.state = {
       fetched: fetched,
       fetching: false,
-      tweetList: [],
       count: 0,
       startDate: new Date('2006-03-20T00:00:00.000+00:00'),
       endDate: new Date(),
@@ -119,7 +118,6 @@ class LoggedInContainer extends Component {
             fetching={this.state.fetching}
             userId={this.props.user.userId}
             count={this.state.count}
-            tweetList={this.state.tweetList}
             order={this.state.order}
             startDate={this.state.startDate}
             endDate={this.state.endDate}

@@ -59,6 +59,7 @@ class Content extends Component {
 
   componentDidMount() {
     if (this.props.fetched) {
+      // Reload tweets
       this.loadTweets();
     }
   }
@@ -72,16 +73,25 @@ class Content extends Component {
         search: this.props.search
       }
     }).then(() => {
+      // Reload tweets
       this.loadTweets();
-    }
-    )
+      // Clear selected tweets
+      this.setState({
+        selectedTweets: []
+      })
+    })
   }
 
   handleDeleteSelectedClick() {
     axios.delete(('/api/deleteSelected'), {
       data: this.state.selectedTweets
     }).then(() => {
+      // Reload tweets
       this.loadTweets();
+      // Clear selected tweets
+      this.setState({
+        selectedTweets: []
+      })
     })
   }
 
