@@ -15,6 +15,7 @@ router.get('/twitter/callback',
 );
 
 router.get('/success', (req, res) => {
+    console.log(req.session)
     if (process.env.NODE_ENV == 'dev') {
         res.redirect('http://127.0.0.1:3000/')
     } else {
@@ -46,7 +47,8 @@ router.get('/user', (req, res) => {
 // Logout
 router.get('/logout', (req, res) => {
     if (req.user) {
-        req.session.destroy()
+        // Destroy the session
+        req.session = null;
         return res.json( { msg: 'logging out'} );
     } else {
         return res.json( { msg: 'no user to log out'} );

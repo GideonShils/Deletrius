@@ -14,9 +14,10 @@ import path from 'path';
 
 const app = express();
 
+// Set port
 app.set('port', process.env.PORT || 3001);
 
-// Enable cross origin from react port
+// Enable cross origin support in dev
 app.use(cors({
     origin:['http://127.0.0.1:3000'],
     methods:['GET','POST', 'PUT', 'DELETE'],
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+// Session setup
 app.use(cookieSession({
     secret:  process.env.SESSION_SECRET,
     resave: false,
@@ -37,6 +39,7 @@ app.use(cookieSession({
     }
 }));
 
+// Authentication setup
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,6 +49,7 @@ app.use('/auth', authRouter);
 // Setup api routing
 app.use('/api', apiRouter);
 
+// Enable resource paths for production version
 if (process.env.NODE_ENV == "prod") {
     // Static resources
     app.use(express.static(path.join(__dirname, '..', 'client', 'build')));

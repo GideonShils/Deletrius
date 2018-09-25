@@ -1,6 +1,7 @@
 import Tweet from '../db/models/tweet';
 import moment from 'moment';
 
+// Fetch tweets from twitter API
 export function getTweets(tweets, userId, t, cb, lastId) {
     // Set API arguments
     let args = {
@@ -46,6 +47,7 @@ export function getTweets(tweets, userId, t, cb, lastId) {
     }
 }
 
+// Save list of tweets to database
 function saveTweets(tweets, userId, callback) {
 
     moment().format();

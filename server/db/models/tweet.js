@@ -10,6 +10,7 @@ const tweetSchema = new Schema({
 	date: Date
 });
 
+// Create index for tweet searching
 tweetSchema.index({'data.text': 'text'})
 
 const Tweet = mongoose.model('Tweets', tweetSchema);
