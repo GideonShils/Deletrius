@@ -18,7 +18,7 @@ router.get('/success', (req, res) => {
     if (process.env.NODE_ENV == 'dev') {
         res.redirect('http://127.0.0.1:3000/')
     } else {
-        res.redirect('http://www.deletrius.com.')
+        res.redirect('http://www.deletrius.com/')
     }
 });
 
