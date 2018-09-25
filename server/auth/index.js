@@ -4,7 +4,9 @@ import passport from '../passport';
 const router = express.Router();
 
 // Login
-router.get('/twitter', passport.authenticate('twitter'));
+router.get('/twitter', () => {
+    console.log('authing');
+});
 
 // Login callback
 router.get('/twitter/callback', 

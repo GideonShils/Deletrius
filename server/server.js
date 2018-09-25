@@ -52,6 +52,7 @@ if (process.env.NODE_ENV == "prod") {
     app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
     app.get('*', (req, res) => {
+        console.log("serving index");
         res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
     })
 }
