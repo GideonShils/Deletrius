@@ -222,7 +222,7 @@ class Content extends Component {
                   If you have fewer than 3200 tweets, click the fetch tweets button below.</p>
               <p>If you need to import more than 3200 tweets, you can import a twitter archive
                   file which can be created through <a href="https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive">Twitter</a>
-                  . Once you've created an archive, you can import it below.</p>
+                  . Once you've created an archive, you can import it below. (COMING SOON)</p>
               <Button
                 variant="contained"
                 color="primary"
@@ -235,6 +235,7 @@ class Content extends Component {
               <Button
                 variant="contained"
                 color="primary"
+                disabled
                 onClick={this.props.handleFetchClick}
                 className={classes.button}
               >

@@ -26,10 +26,17 @@ class LoggedOutContainer extends Component {
     const { classes } = this.props;
     let loginUrl;
 
-    if (window.location.href == 'https://twitter-delete.herokuapp.com/') {
-      loginUrl = 'https://twitter-delete.herokuapp.com/auth/twitter';
-    } else {
+    if (window.location.hostname === 'localhost' ||
+      // [::1] is the IPv6 localhost address.
+      window.location.hostname === '[::1]' ||
+      // 127.0.0.1/8 is considered localhost for IPv4.
+      window.location.hostname.match(
+        /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+      )
+    ) {
       loginUrl = 'http://127.0.0.1:3001/auth/twitter';
+    } else {
+      loginUrl = 'https://deletriusv1.herokuapp.com/auth/twitter';
     }
 
     return (

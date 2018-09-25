@@ -15,7 +15,6 @@ router.get('/twitter/callback',
 );
 
 router.get('/success', (req, res) => {
-    console.log(req.session)
     if (process.env.NODE_ENV == 'dev') {
         res.redirect('http://127.0.0.1:3000/')
     } else {

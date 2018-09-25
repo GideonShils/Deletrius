@@ -75,7 +75,7 @@ class Profile extends Component {
         >
           <MenuItem onClick={this.props.handleLogoutClick}>Logout</MenuItem>
           <MenuItem onClick={this.props.handleFetchClick}>Fetch Tweets</MenuItem>
-          <MenuItem onClick={this.props.handleFetchClick}>Import Archive</MenuItem>
+          <MenuItem disabled onClick={this.props.handleFetchClick}>Import Archive</MenuItem>
         </Menu>
       </div>
     );
