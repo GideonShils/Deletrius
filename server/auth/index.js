@@ -15,12 +15,19 @@ router.get('/twitter/callback',
 );
 
 router.get('/success', (req, res) => {
-    console.log(req.session)
-    res.redirect('../')
+    if (process.env.NODE_ENV == 'dev') {
+        res.redirect('http://127.0.0.1:3000/')
+    } else {
+        res.redirect('https://twitter-delete.herokuapp.com/')
+    }
 });
 
 router.get('/failure', (req, res) => {
-	res.redirect('../');
+    if (process.env.NODE_ENV == 'dev') {
+        res.redirect('http://127.0.0.1:3000/');
+    } else {
+        res.redirect('https://twitter-delete.herokuapp.com/');
+    }
 });
 
 // Get user info
