@@ -54,7 +54,7 @@ class App extends Component {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     })
   }
 
@@ -68,7 +68,7 @@ class App extends Component {
       })
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     })
   }
   
@@ -78,7 +78,6 @@ class App extends Component {
         <CssBaseline />
         {this.state.isAuthenticated ? (
           <React.Fragment>
-            {console.log("Rendering authenticated")}
             <LoggedInContainer 
               user={this.state.user}
               handleLogoutClick={this.handleLogoutClick}
@@ -86,7 +85,6 @@ class App extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {console.log("Rendering not authenticated")}
             <LoggedOutContainer />
           </React.Fragment>
         )}

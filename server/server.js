@@ -4,7 +4,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
-import session from 'express-session';
+import cookieSession from 'cookie-session';
 import passport from './passport';
 
 import authRouter from './auth';
@@ -28,9 +28,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.use(session({
+app.use(cookieSession({
     secret:  process.env.SESSION_SECRET,
-    name: 'sessionId',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -52,7 +51,6 @@ if (process.env.NODE_ENV == "prod") {
     app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
     app.get('*', (req, res) => {
-        console.log("serving index");
         res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
     })
 }

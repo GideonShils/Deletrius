@@ -57,11 +57,10 @@ function saveTweets(tweets, userId, callback) {
     };
 
 
-    console.log('adding tweets');
+    console.log('Fetching tweets...');
     
     if (tweets.length > 0) {
         tweets.forEach(tweetData => {
-            console.log(tweetData.id_str)
             const date = moment.utc(tweetData.created_at, 'ddd MMM DD HH:mm:ss Z YYYY');
             const query = { user: userId, id_str: tweetData.id_str };
     

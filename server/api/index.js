@@ -7,7 +7,6 @@ const router = express.Router();
 
 // Fetch initial 3200 tweets using twitter API
 router.get('/fetch', (req, res) => {
-    console.log(req.session);
     const userId = req.user.userId;
     const t = new Twit(req.user.twit);
 
@@ -19,7 +18,6 @@ router.get('/fetch', (req, res) => {
             res.send({msg: 'error'});
             res.end();
         } else if (data.length === 0) {
-            console.log('no tweets');
             res.send();
         } else {
             console.log('Saved ' + data.count + ' tweets');

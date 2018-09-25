@@ -35,7 +35,6 @@ class Profile extends Component {
   }
 
   handleMenuOpen(e) {
-    console.log(e.currentTarget)
     this.setState({
       anchorEl: e.currentTarget
     })
