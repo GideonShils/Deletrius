@@ -42,11 +42,11 @@ class Content extends Component {
     
     this.state = {
       page: 0,
-      count: 0,
+      totalFiltered: 0,
       rowsPerPage: 25,
       loading: false,
       tweetList: [],
-      selectedTweets: []
+      selectedTweets: [],
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -143,7 +143,7 @@ class Content extends Component {
     .then((res) => {
       this.setState({
         tweetList: res.data.tweets,
-        count: res.data.count,
+        totalFiltered: res.data.count,
         loading: false
       })
     })
@@ -172,8 +172,9 @@ class Content extends Component {
           handleDeleteSelectedClick={this.handleDeleteSelectedClick}
           handleDeleteAllClick={this.handleDeleteAllClick}
           className={classes.topBar}
-          total={this.state.count}
+          totalFiltered={this.state.totalFiltered}
           selectedCount={this.state.selectedTweets.length}
+          totalCount={this.props.totalCount}
         />
         
         <div className={classes.container}>
@@ -201,7 +202,7 @@ class Content extends Component {
                         />
                       </div>
                       <TablePagination 
-                        count={this.state.count}
+                        count={this.state.totalFiltered}
                         page={this.state.page} 
                         rowsPerPage={this.state.rowsPerPage}
                         component="div"

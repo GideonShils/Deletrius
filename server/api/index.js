@@ -21,7 +21,7 @@ router.get('/fetch', (req, res) => {
             res.send();
         } else {
             console.log('Saved ' + data.count + ' tweets');
-            res.send({msg: 'success'});
+            res.send({msg: 'success', count: data.count});
             res.end();
         }
     });

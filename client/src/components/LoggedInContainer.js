@@ -36,7 +36,8 @@ class LoggedInContainer extends Component {
       endDate: new Date(),
       order: 'newFirst',
       searchVal: '',
-      search: ''
+      search: '',
+      totalCount: 0
     }
     
     this.handleFetchClick = this.handleFetchClick.bind(this);
@@ -84,7 +85,8 @@ class LoggedInContainer extends Component {
       localStorage.setItem('fetched', true);
       this.setState({
         fetching: false,
-        fetched: true
+        fetched: true,
+        totalCount: res.data.count
       })
     })
     .catch((err) => {
@@ -123,6 +125,7 @@ class LoggedInContainer extends Component {
             endDate={this.state.endDate}
             search={this.state.search}
             handleFetchClick={this.handleFetchClick}
+            totalCount={this.state.totalCount}
             className={classes.content}
           />
         </div>

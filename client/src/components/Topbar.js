@@ -86,13 +86,14 @@ class Topbar extends Component {
       <React.Fragment>
         <div className={classes.topbar}>
           <Typography className={classes.count} variant="subheading">
-            {this.props.selectedCount}/{this.props.total} selected
+            {this.props.selectedCount}/{this.props.totalCount} tweets selected
           </Typography>
           <Button
             onClick={this.handleDeleteAllClick}
             variant="contained"
             color="secondary"
             className={classes.button}
+            disabled={this.props.totalFiltered < 1}
           >
             Delete all
           </Button>
@@ -118,7 +119,7 @@ class Topbar extends Component {
           <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              You're about to delete all tweets that match your search criteria. 
+              You're about to delete the {this.props.totalFiltered} tweet{this.props.totalFiltered > 1 ? 's' : ''} that match{this.props.totalFiltered > 1 ? '' : 'es'} your search criteria. 
               This action cannot be undone.
             </DialogContentText>
           </DialogContent>
@@ -142,7 +143,7 @@ class Topbar extends Component {
           <DialogTitle id="alert-dialog-title">Are you sure?</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              You're about to delete {this.props.selectedCount} selected tweets. 
+              You're about to delete {this.props.selectedCount} selected tweet{this.props.selectedCount > 1 ? 's' : ''}. 
               This action cannot be undone.
             </DialogContentText>
           </DialogContent>
