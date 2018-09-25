@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import logo from '../assets/logo.svg';
 
 const styles = theme => ({
   root: {
     textAlign: 'center',
-    background: '#4253AF',
     height: '100%',
     padding: theme.spacing.unit * 10
   },
@@ -15,7 +15,6 @@ const styles = theme => ({
     textTransform: 'none'
   },
   type: {
-    color: '#fff',
     fontWeight: 100
   }
 })
@@ -36,16 +35,17 @@ class LoggedOutContainer extends Component {
     ) {
       loginUrl = 'http://127.0.0.1:3001/auth/twitter';
     } else {
-      loginUrl = 'https://deletriusv1.herokuapp.com/auth/twitter';
+      loginUrl = 'http://www.deletrius.com/auth/twitter';
     }
 
     return (
       <div className={classes.root}>
+        <img src={logo} alt="logo" width="100"/>
         <Typography
           className={classes.type}
           variant="display3"
         >
-          Twitter Delete
+          Deletrius
         </Typography>
 
         <Typography
@@ -56,7 +56,7 @@ class LoggedOutContainer extends Component {
         </Typography>
 
         <Button
-          color="secondary" 
+          color="primary" 
           href={loginUrl}
           variant="contained"
           className={classes.button}

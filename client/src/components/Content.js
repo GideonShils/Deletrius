@@ -217,12 +217,16 @@ class Content extends Component {
           ) : (
             <Paper className={classes.fetchInstructions} elevation={1} square={true}>
               <h3>Import your tweets to get started</h3>
-              <p>The easiest way to import your tweets is directly through twitter.
-                  However, Twitter enforces a 3200 tweet limit for imports with their API.
-                  If you have fewer than 3200 tweets, click the fetch tweets button below.</p>
-              <p>If you need to import more than 3200 tweets, you can import a twitter archive
-                  file which can be created through <a href="https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive">Twitter</a>
-                  . Once you've created an archive, you can import it below. (COMING SOON)</p>
+              <p>
+                The easiest way to import your tweets is directly through twitter.
+                However, Twitter enforces a 3200 tweet limit for imports with their API.
+                If you have fewer than 3200 tweets, click the fetch tweets button below.
+              </p>
+              <p>
+                If you need to import more than 3200 tweets, you can import a twitter archive
+                file which can be created through Twitter. Once you've created an archive, you 
+                can import it below. (COMING SOON)
+              </p>
               <Button
                 variant="contained"
                 color="primary"

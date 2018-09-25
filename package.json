@@ -1,7 +1,7 @@
 {
-  "name": "twitter-delete",
+  "name": "deletrius",
   "version": "1.0.0",
-  "description": "twitter mass deletion",
+  "description": "Quickly find and delete old tweets in bulk",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GideonShils/Twitter-Delete.git"
+    "url": "git+https://github.com/GideonShils/deletrius.git"
   },
   "author": "Gideon Shils",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GideonShils/Twitter-Delete/issues"
+    "url": "https://github.com/GideonShils/deletrius/issues"
   },
-  "homepage": "https://github.com/GideonShils/Twitter-Delete#readme",
+  "homepage": "https://github.com/GideonShils/deletrius#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
