@@ -1,6 +1,6 @@
 <p align="center">
     <a href="http://deletrius.com" rel="noopener" target="_blank">
-        <img src="./client/src/assets/eraser.svg" alt="Deletrius logo">
+        <img width="150" src="./client/src/assets/eraser.svg" alt="Deletrius logo">
     </a>
 </p>
 <h1 align="center">Deletrius</h1>
