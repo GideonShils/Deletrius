@@ -36,11 +36,6 @@ const styles = theme => ({
   loading: {
     margin: '0 auto',
     textAlign: 'center'
-  },
-  pagination: {
-    [theme.breakpoints.down('850')]: {
-      marginBottom: 70
-    }
   }
 })
 

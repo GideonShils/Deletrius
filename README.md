@@ -23,9 +23,17 @@
 - [ ] Import archive
 - [ ] Login failure redirect page
 
-## Credit
+## Disclaimer
+While Deletrius is functional, it is still under development and is not guaranteed to be bug free.
 
+Please use with caution. Once deleted, tweets cannot be recovered.
+
+Deletrius is not responsible for any loss of data resulting from user or system error 
+
+## Credit
 
 Created by [Gideon Shils](gideonshils.com)
 
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+
