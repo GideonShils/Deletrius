@@ -30,7 +30,9 @@ To run deletrius locally, download the repository, move to the root directory, a
 
 `yarn start:dev` 
 
-To work correctly, you need a .env file in the root directory with the following items
+To work correctly, this project requires a .env file. A sample file has been provided as sample.env.
+
+In the root directory create a file ".env" with the following items:
 
 - Database: You can use an mLab database for testing purposes
     - DB_URI
