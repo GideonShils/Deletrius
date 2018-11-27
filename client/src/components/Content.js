@@ -113,6 +113,7 @@ class Content extends Component {
       }
   }
 
+  // Handle tweet selection
   handleTweetClick(e, id) {
     if (!this.state.selectedTweets.includes(id)) {
       this.setState({
@@ -129,6 +130,7 @@ class Content extends Component {
     }
   }
 
+  // Load tweets
   loadTweets() {
     this.setState({
       loading: true
@@ -153,12 +155,14 @@ class Content extends Component {
     })
   }
 
+  // Handle pagination page change
   handlePageChange(event, page) {
     this.setState({ page: page }, () => {
       this.loadTweets();
     })
   }
 
+  // Handle pagination number per page
   handleRowNumChange(event) {
     this.setState({ rowsPerPage: event.target.value }, () => {
       this.loadTweets();
@@ -242,6 +246,7 @@ class Content extends Component {
                 Fetch tweets
               </Button>
 
+              {/* TO DO: Import twitter archive */}
               <Button
                 variant="contained"
                 color="primary"

@@ -8,6 +8,7 @@ import throwaway from '../assets/twitter_throwaway.png';
 import Grid from '@material-ui/core/Grid';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
+// Customize material theme
 const styles = theme => ({
   root: {
     textAlign: 'center',
@@ -59,6 +60,7 @@ class LoggedOutContainer extends Component {
     const { classes } = this.props;
     let loginUrl;
 
+    // Change login URL based on prod or dev mode
     if (window.location.hostname === 'localhost' ||
       // [::1] is the IPv6 localhost address.
       window.location.hostname === '[::1]' ||

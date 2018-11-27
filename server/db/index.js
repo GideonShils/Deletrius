@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
+// Conect to mongoDB database
 mongoose.connect(process.env.DB_URI, {
 	auth: {
 		user: process.env.DB_USER,

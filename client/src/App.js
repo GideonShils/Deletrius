@@ -17,6 +17,7 @@ class App extends Component {
     let photo = localStorage.getItem('photo')
     let userId = localStorage.getItem('userId');
 
+    // If user was stored in local storage, set user object and state
     if (username) {
       let user = {
         username: username,
@@ -33,10 +34,12 @@ class App extends Component {
         user: null
       }
 
+      // If user wasn't in local storage, check the server
       this.checkAuth();
     }
   }
 
+  // Check if user logged in and set localstorage
   checkAuth() {
     axios.get('/auth/user')
     .then((res) => {
@@ -58,6 +61,7 @@ class App extends Component {
     })
   }
 
+  // On logout, clear localstorage and reset state
   handleLogoutClick() {
     localStorage.clear();
     axios.get('/auth/logout')
@@ -76,6 +80,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
+        {/* If authenticated, show logged in contaner. Otherwise, show logged out container */}
         {this.state.isAuthenticated ? (
           <React.Fragment>
             <LoggedInContainer 

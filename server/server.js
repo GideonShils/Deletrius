@@ -18,16 +18,18 @@ const app = express();
 app.set('port', process.env.PORT || 3001);
 
 // Enable cross origin support in dev
-app.use(cors({
-    origin:['http://127.0.0.1:3000'],
-    methods:['GET','POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
+if (process.env.NODE_ENV == 'dev') {
+    app.use(cors({
+        origin:['http://127.0.0.1:3000'],
+        methods:['GET','POST', 'PUT', 'DELETE'],
+        credentials: true
+    }));
+}
 
 app.use(helmet()); // Security
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(logger('dev'));
+app.use(logger('dev')); // Logger
 
 // Session setup
 app.use(cookieSession({
@@ -54,6 +56,7 @@ if (process.env.NODE_ENV == "prod") {
     // Static resources
     app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
+    
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
     })

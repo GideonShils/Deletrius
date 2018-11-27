@@ -29,6 +29,7 @@ class Sidebar extends Component {
     const { classes } = this.props;
     return (
         <div className={classes.root}>
+          {/* Profile info */}
           <Profile
             user = {this.props.user}
             handleFetchClick={this.props.handleFetchClick}
@@ -37,6 +38,7 @@ class Sidebar extends Component {
   
           <List>
             <Divider />
+            {/* Search */}
             <ListItem>
               <ListItemIcon>
                 <SearchIcon />
@@ -47,6 +49,8 @@ class Sidebar extends Component {
               />
             </ListItem>
             <Divider />
+
+            {/* Sort */}
             <ListItem>
               <ListItemIcon>
                 <SortIcon />
@@ -57,6 +61,7 @@ class Sidebar extends Component {
               />
             </ListItem>
 
+            {/* Start date */}
             <ListItem>
               <ListItemIcon>
                 <DateIcon />
@@ -67,6 +72,7 @@ class Sidebar extends Component {
               />
             </ListItem>
 
+            {/* End date */}
             <ListItem>
               <ListItemIcon>
                 <DateIcon />

@@ -3,7 +3,7 @@ import passport from '../passport';
 
 const router = express.Router();
 
-// Login
+// Login via Passport twitter strategy
 router.get('/twitter', passport.authenticate('twitter'));
 
 // Login callback
@@ -13,6 +13,9 @@ router.get('/twitter/callback',
         failureRedirect: '/auth/failure'
     })
 );
+
+// Sucess & failure both currently redirect to the homepage
+// TO-DO: Add failure page
 
 router.get('/success', (req, res) => {
     if (process.env.NODE_ENV == 'dev') {
@@ -30,7 +33,7 @@ router.get('/failure', (req, res) => {
     }
 });
 
-// Get user info
+// Get user info if exists
 router.get('/user', (req, res) => {
     if (req.user) {
         return res.json({ 
@@ -43,7 +46,7 @@ router.get('/user', (req, res) => {
     }
 });
 
-// Logout
+// Logout and destroy sessions
 router.get('/logout', (req, res) => {
     if (req.user) {
         // Destroy the session

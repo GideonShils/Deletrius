@@ -36,6 +36,7 @@ class Tweets extends Component {
     this.getClassnames = this.getClassnames.bind(this);
   }
 
+  /* Handle class change for selected vs unselected tweet */
   getClassnames(id) {
     const {classes} = this.props;
     if (this.props.selectedTweets.includes(id)) {
@@ -45,6 +46,7 @@ class Tweets extends Component {
     }
   }
 
+  /* Display all tweets */
   render() {
     const linkProps = { target: '_blank', rel: 'noreferrer' };
     const { classes } = this.props;

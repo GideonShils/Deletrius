@@ -27,29 +27,32 @@ router.get('/fetch', (req, res) => {
     });
 });
 
-// Takes 2 params: page number (page), number per page(limit)
+// Get tweets from given user that match current filtering settings.
+// Returns properly paginated values using page and limit params
 router.get('/user/:id', (req, res) => {
-    const limit = parseInt(req.query.limit);
-    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit); // Num per page
+    const page = parseInt(req.query.page); // Page num
     const order = req.query.order;
-    let sort;
-    const startDate = new Date(req.query.startDate);
-    const endDate = new Date(req.query.endDate);
+    const startDate = new Date(req.query.startDate); // Earliest date
+    const endDate = new Date(req.query.endDate); // Latest date
 
+    let sort;
     if (order == 'newFirst') {
         sort = -1;
     } else {
         sort = 1
     }
 
-    const skip = (page) * limit;
+    const skip = (page) * limit; // Skip for pagination
 
-    let query = {user: req.params.id}
+    let query = {user: req.params.id} // User id
 
+    // Search term
     if (req.query.search) {
         query.$text = {$search: req.query.search}
     }
 
+    // Get all tweets that meet query filters 
     Tweet
     .find(query)
     .where('date').gte(startDate).lte(endDate)
@@ -61,6 +64,7 @@ router.get('/user/:id', (req, res) => {
             console.error(err);
             res.json(null);
         } else {
+            // Get the number of items that meet the query filters
             Tweet.countDocuments(query)
             .where('date').gte(startDate).lte(endDate)
             .exec((err, count) => {
@@ -68,6 +72,7 @@ router.get('/user/:id', (req, res) => {
                     console.error(err)
                     res.json(null);
                 } else {
+                    // Return the count and the list of documents
                     res.json({count: count, tweets: docs});
                 }
             })
@@ -75,14 +80,16 @@ router.get('/user/:id', (req, res) => {
     })
 })
 
-// Takes 2 params: page number (page), number per page(limit)
+// Delete all tweets that match current filters
 router.delete('/user/:id', (req, res) => {
-    const t = new Twit(req.user.twit);
+    const t = new Twit(req.user.twit); // Twit object for interacting with twitter API
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
 
+    // User id
     let query = {user: req.params.id}
 
+    // Search term
     if (req.query.search) {
         query.$text = {$search: String(req.query.search)}
     }
@@ -96,12 +103,14 @@ router.delete('/user/:id', (req, res) => {
             res.json(null);
         } else {
             let count = 0;
+            // Delete each tweet
             docs.forEach(doc => {
                 t.post('statuses/destroy/:id', {id: doc.id_str}, (err, data) => {
                     if (err) {
                         console.error(err);
                     } else {
                         count++;
+                        // Remove tweet from database
                         Tweet.deleteOne({id_str: doc.id_str}, (err) => {
                             if (err) {
                                 console.error(err)
@@ -118,13 +127,14 @@ router.delete('/user/:id', (req, res) => {
     })
 })
 
-// Takes 2 params: page number (page), number per page(limit)
+// Delete selected tweets
 router.delete('/deleteSelected', (req, res) => {
     const t = new Twit(req.user.twit);
 
     const tweetIDs = req.body;
     let count = 0;
 
+    // Delete each tweet
     tweetIDs.forEach(tweetId => {
         t.post('statuses/destroy/:id', {id: tweetId}, (err, data) => {
             if (err) {
