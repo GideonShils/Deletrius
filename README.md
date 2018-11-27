@@ -24,14 +24,11 @@
 - [ ] Login failure redirect page
 
 ## How to run locally
-To run deletrius locally, download the repository and run:
+To run deletrius locally, download the repository, move to the root directory, and run:
 
 `npm i`
 
 `yarn start:dev` 
-
-from the root directory
-
 
 To work correctly, you need a .env file in the root directory with the following items
 
