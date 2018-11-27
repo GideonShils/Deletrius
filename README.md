@@ -32,7 +32,7 @@ To run deletrius locally, download the repository, move to the root directory, a
 
 To work correctly, this project requires a .env file. A sample file has been provided as sample.env.
 
-In the root directory create a file ".env" with the following items:
+In the root directory create a file ".env" with the following variables:
 
 - Database: You can use an mLab database for testing purposes
     - DB_URI
