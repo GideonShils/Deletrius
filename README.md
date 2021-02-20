@@ -26,7 +26,7 @@
 ## How to run locally
 To run deletrius locally, download the repository, move to the root directory, and run:
 
-`npm i`
+`yarn install`
 
 `yarn start:dev` 
 
