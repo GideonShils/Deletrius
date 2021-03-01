@@ -71,7 +71,7 @@ class LoggedOutContainer extends Component {
     ) {
       loginUrl = 'http://127.0.0.1:3001/auth/twitter';
     } else {
-      loginUrl = 'https://deletriusv1.herokuapp.com/auth/twitter';
+      loginUrl = 'http://deletrius.com/auth/twitter';
     }
 
     return (
