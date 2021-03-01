@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="http://deletrius.com" rel="noopener" target="_blank">
+    <a href="https://deletriusv1.herokuapp.com" rel="noopener" target="_blank">
         <img width="150" src="./client/src/assets/logo.svg" alt="Deletrius logo">
     </a>
 </p>
