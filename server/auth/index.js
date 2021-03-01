@@ -21,7 +21,7 @@ router.get('/success', (req, res) => {
     if (process.env.NODE_ENV == 'dev') {
         res.redirect('http://127.0.0.1:3000/')
     } else {
-        res.redirect('http://www.deletrius.com/')
+        res.redirect('http://deletrius.com/')
     }
 });
 
@@ -29,7 +29,7 @@ router.get('/failure', (req, res) => {
     if (process.env.NODE_ENV == 'dev') {
         res.redirect('http://127.0.0.1:3000/');
     } else {
-        res.redirect('https://deletriusv1.herokuapp.com');
+        res.redirect('http://deletrius.com/auth/twitter');
     }
 });
 
